@@ -34,8 +34,3 @@ def backup_file(file_path):
     dst_file_path = '{0}/{1}_{2}'.format(backup_path, file_name, timestamp)
     print('{0} backed up to: {1}'.format(file_name, dst_file_path))
     os.rename(file_path, dst_file_path)
-
-def create_symlink(file_path):
-  # get home directory
-  home_dir = os.environ['HOME']
-  print('home_dir: {0}'.format(home_dir))
