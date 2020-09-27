@@ -1,1 +1,3 @@
-addons
+addons/
+bin/
+.DS_Store

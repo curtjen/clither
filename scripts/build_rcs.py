@@ -3,50 +3,43 @@
 import json
 import os
 from helpers import create_directory
-# import subprocess
 
-# # addons_dirs = os.system('ls addons')
-# addons_dirs = subprocess.run('ls', 'addons')
-# print(addons_dirs)
-# # with open('')
-
-zshrc_list = []
-configs_list = []
-
+# get list of addon directories
 addons_dirs = os.listdir('addons')
 
-# print(addons_dirs)
+def _append_to_file(rc, addon_path, config_rc_path):
+  bin_rc_path = './bin/{0}'.format(rc)
+  new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
 
-# TODO(curtjen): Change this to be dynamic based on keys in the retrieved config file.
+  # FOR TROUBLESHOOTING
+  # print('\n####################')
+  # print('rc: {0}'.format(rc))
+  # print('addon_path: {0}'.format(addon_path))
+  # print('new_rc_path: {0}'.format(new_rc_path))
+  # print('bin_rc_path: {0}'.format(bin_rc_path))
 
-def create_rcs_lists():
+  # link to the addon's respective rc file
+  import_cmd = 'source {0}\n'.format(new_rc_path)
+
+  # append to respective rc file
+  with open(bin_rc_path, 'a') as file:
+    file.write(import_cmd)
+
+def _build_rc_files(config, addon_path):
+  for rc in config:
+    _append_to_file(rc, addon_path, config[rc])
+
+def build_rcs():
+  # Loop over each addon config
   for dir in addons_dirs:
-    config_path = 'addons/{0}/clither.config.json'.format(dir)
+    addon_path = 'addons/{0}'.format(dir)
+    config_path = '{0}/clither.config.json'.format(addon_path)
+
+    # Do stuff with the config
     if os.path.exists(config_path):
-      print('config_path found: {0}'.format(config_path))
       with open(config_path) as file:
         config = json.load(file)
-        zshrc_list.append('{0}/{1}'.format(dir, config['zshrc']))
-
-    else:
-      print('config_path NOT found: {0}'.format(config_path))
-
-create_rcs_lists()
-
-print('zshrc_list: {0}'.format(zshrc_list))
-print('zshrc_list[0]: {0}'.format(zshrc_list[0]))
+        _build_rc_files(config, addon_path)
 
 create_directory('bin')
-
-def get_file_contents(path):
-  with open(path) as file:
-    return file.read()
-
-def append_to_rc(rc, addon_rc):
-  rc_path = './bin/{0}'.format(rc)
-  file_contents = get_file_contents(addon_rc)
-  # print('file_contents: {0}'.format(file_contents))
-  with open(rc_path, 'a') as file:
-    file.write(file_contents)
-
-append_to_rc('zshrc', 'addons/{0}'.format(zshrc_list[0]))
+build_rcs()
