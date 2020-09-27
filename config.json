@@ -1,6 +1,6 @@
 {
   "addons": [
-    "https://github.com/curtjen/.rcs"
+    "https://github.com/curtjen/rcs"
   ],
   "shell": "zsh"
 }

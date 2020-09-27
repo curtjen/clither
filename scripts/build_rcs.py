@@ -6,6 +6,7 @@ from helpers import create_directory
 
 # get list of addon directories
 addons_dirs = os.listdir('addons')
+current_dir = os.getcwd()
 
 def _append_to_file(rc, addon_path, config_rc_path):
   bin_rc_path = './bin/{0}'.format(rc)
@@ -32,7 +33,7 @@ def _build_rc_files(config, addon_path):
 def build_rcs():
   # Loop over each addon config
   for dir in addons_dirs:
-    addon_path = 'addons/{0}'.format(dir)
+    addon_path = '{0}/addons/{1}'.format(current_dir, dir)
     config_path = '{0}/clither.config.json'.format(addon_path)
 
     # Do stuff with the config

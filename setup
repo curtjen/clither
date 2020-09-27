@@ -10,8 +10,9 @@ python ./scripts/addons_importer.py;
 
 # --- Build RCs ---
 # TODO: Write files to bin/ directory
-# python ./scripts/build_rcs.py;
+python ./scripts/build_rcs.py;
 
 # --- Create Aliases ---
+python ./scripts/generate_symlinks.py;
 # TODO: Create aliases for new RC file.
 # TODO: Backup existing and move old/existing RCs.
