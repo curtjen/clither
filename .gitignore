@@ -1,3 +1,4 @@
 addons/
 bin/
 .DS_Store
+*.pyc
