@@ -1,19 +1,27 @@
 #!/bin/env python
+"""Backup current RC files in the HOME directory."""
 
 import os
 from helpers import backup_file
 
-# get list of rcs in bin
-bin_files = os.listdir('bin')
+rc_files = os.listdir('~/clither_custom/rcs')
 
-# get home directory
-home_dir = os.environ['HOME']
+def backup_rc_files(rc_files, home_dir):
+  """For each file in bin, backup the same file name in home.
 
-# for each file in bin, backup the same file name in home
-def backup_rc_files():
-  for rc in bin_files:
-    backup_file_path = '{0}/{1}'.format(home_dir, rc)
-    print('backup_file_path: {0}'.format(backup_file_path))
+  args:
+    rc_files: (list) List of existing Clither RC files.
+    home_dir: (str) Path to home directory e.g. ~
+  """
+  for rc in rc_files:
+    backup_file_path = "{0}/{1}".format(home_dir, rc)
+    print("backup_file_path: " + backup_file_path)
     backup_file(backup_file_path)
 
-backup_rc_files()
+def main():
+  rc_files = os.listdir("bin")
+  home_dir = os.environ["HOME"]
+  backup_rc_files(rc_files, home_dir)
+
+if __name__ == "__main__":
+  main()

@@ -9,7 +9,7 @@ addons_dirs = os.listdir('addons')
 current_dir = os.getcwd()
 
 def _append_to_file(rc, addon_path, config_rc_path):
-  bin_rc_path = './bin/{0}'.format(rc)
+  rc_dir_path = '~/clither_custom/rcs/{0}'.format(rc)
   new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
 
   # FOR TROUBLESHOOTING
@@ -23,10 +23,11 @@ def _append_to_file(rc, addon_path, config_rc_path):
   import_cmd = 'source {0}\n'.format(new_rc_path)
 
   # append to respective rc file
-  with open(bin_rc_path, 'a') as file:
+  with open(rc_dir_path, 'a') as file:
     file.write(import_cmd)
 
 def _build_rc_files(config, addon_path):
+  # TODO(curjten): Account for appending bins to the PATH
   for rc in config:
     _append_to_file(rc, addon_path, config[rc])
 
@@ -42,5 +43,6 @@ def build_rcs():
         config = json.load(file)
         _build_rc_files(config, addon_path)
 
-create_directory('bin')
+create_directory('~/clither_custom')
+create_directory('~/clither_custom/rcs')
 build_rcs()
