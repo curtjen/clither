@@ -6,16 +6,58 @@ CLIther (pronounced _slither_) is a utility for setting up consistent CLI enviro
 In progress.
 
 ## Architecture
+
 ```plain
-clither/
-|__ addons/
-|__ bin/
-|__ scripts/
-|   |__ alias_rcs.py
-|__ themes/
-|__ init
-|__ config.json
-|__ .gitignore
+clither.sh
+- Setup
+  - generate config
+  - choose shell
+  - oh-my-zshr or not
+  - create directory structure and move clither files to it
+- Install
+- Update
+- Import addons
+- Build RCs
+- Backup RCs
+- Generate symlinks
+- Generate config
+- Restore from backups (and remove symlinks)
+```
+
+```plain
+~/clither/
+|   |__ .git/ <-- public CLIther tool -->
+|   |__ lib/
+|   |   |__ addons_importer.py
+|   |   |__ backup_rcs.py
+|   |   |__ build_rcs.py
+|   |   |__ library_importer.py
+|   |__ README.md
+|   |__ clither.sh <-- one file to rule them all -->
+~/.clither_custom/
+|__ rcs/ <-- built by build_rcs.py -->
+|__ e.g zshrc, vimrc, bashrc, bash_profile, etc.
+|__ addons/ <-- git cloned pieces of the pie -->
+|   |__ .git/ <-- your own David Pumpkin -->
+|   |__ themes/ <-- custom created themes -->
+|   |__ config.json <-- customize which addons to get -->
+        - overrides
+          - {
+              [addon]: {
+                [rc]: "PATH"
+              }
+            }
+        - addons <-- repos with a clither config -->
+          - clither.config.json:
+            {
+              [rc]: "path/to/file",
+              bins: ["path/to/bin_file", "path/to/another_bin_file"],
+            }
+        - libraries <-- directories/repos with no clither config -->
+          - oh-my-zsh
+        - shell
+|   |__ overrides/
+|   |   |__ override.json
 ```
 
 ### Architecture Breakdown
@@ -95,4 +137,3 @@ example:
 # TODO: import plugins
 # TODO: import aliases
 # TODO: import environment variables (e.g. PATH, etc.)
-
