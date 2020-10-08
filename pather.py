@@ -2,8 +2,9 @@
 import os
 import sys
 
+CURRENT_DIR = os.getcwd()
+
 def run_pathing_injections():
-  CURRENT_DIR = os.getcwd()
   paths = (
     CURRENT_DIR + '/lib',
   )
