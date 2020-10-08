@@ -11,13 +11,16 @@
 # --- create_symlink("FILE_PATH") ---
 # This will create a symlink inside the $HOME directory for a given file path.
 
-import argparse
 import os
+import sys
 import time
 
-FLAGS = argparse.ArgumentParser(__doc__)
-FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
-FLAGS = FLAGS.parse_args()
+#TODO(xnz): figure out a way to make argparse play nice on libs.
+dry_run_flag = False
+if '--dry_run' in sys.argv:
+  dry_run_flag = True
+
+print(dry_run_flag)
 
 def create_directory(dir):
   if dry_run('create dir ' + dir):
@@ -50,7 +53,7 @@ def backup_file(file_path):
 
 def dry_run(msg):
   """Return True and print msg if dry_run flag is set, else return False."""
-  if FLAGS.dry_run:
+  if dry_run_flag:
     print('dry_run: ' + msg)
     return True
   return
