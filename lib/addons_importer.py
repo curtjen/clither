@@ -8,12 +8,12 @@ import os
 import helpers
 from helpers import dry_run
 
-def get_data():
-  with open('./config.json') as file:
+def get_json_data():
+  with open(helper.CONFIG_FILE) as file:
     data = json.load(file)
     addons = data['addons']
     shell = data['shell']
-  return data, addons, shell
+  return addons, shell
 
 def clone_addons(addons):
   """Clone addons.
@@ -21,20 +21,15 @@ def clone_addons(addons):
   args:
     addons: (list) Addons to clone.
   """
+  print('Cloning addons...')
   for url in addons:
-    print('url: ' + url)
-    # os.system('cd addons; git clone ' + url + '; cd -')
-    # os.system(f'cd addons; git clone {url}; cd -')
     helpers.run_cmd('cd addons; git clone {0}; cd -'.format(url))
 
 def main():
-  if not dry_run('do this would happen now'):
-    print('do this')
-
-  data, addons, shell = get_data()
+  addons, shell = get_json_data()
 
   # --- Create Addons Directory ---
-  helpers.create_directory('addons')
+  helpers.create_directory(helper.ADDONS_PATH)
 
   # _create_directory('addons')
   # os.system('mkdir addons')
