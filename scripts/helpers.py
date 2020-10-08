@@ -53,4 +53,15 @@ def dry_run(msg):
   if FLAGS.dry_run:
     print('dry_run: ' + msg)
     return True
-  return False
+  return
+
+def run_cmd(cmd):
+  """Desc
+
+  args:
+    cmd: (str) The command to run.
+  """
+  if dry_run('run cmd: ' + cmd):
+    return
+  #TODO(xnz): mv this to a subprocess
+  os.system(cmd)

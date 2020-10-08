@@ -1,15 +1,18 @@
 #!/bin/env python
+"""Build RC files."""
 
 import json
 import os
 from helpers import create_directory
 
-# get list of addon directories
-addons_dirs = os.listdir('addons')
-current_dir = os.getcwd()
+ADDON_DIRS = os.listdir('addons')
+CURRENT_DIR = os.getcwd()
+HOME_DIR = os.environ['HOME']
 
 def _append_to_file(rc, addon_path, config_rc_path):
-  rc_dir_path = '~/clither_custom/rcs/{0}'.format(rc)
+  rc_dir_path = '{0}/clither_custom/rcs/{1}'.format(home_dir, rc)
+  # TODO(xnz): Strings with variables this way?
+  # rc_dir_path = home_dir + '/clither_custom/rcs/' + rc
   new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
 
   # FOR TROUBLESHOOTING
@@ -43,6 +46,12 @@ def build_rcs():
         config = json.load(file)
         _build_rc_files(config, addon_path)
 
-create_directory('~/clither_custom')
-create_directory('~/clither_custom/rcs')
-build_rcs()
+def main():
+  # get list of addon directories
+
+  create_directory(home_dir + '/clither_custom')
+  create_directory(home_dir + '/clither_custom/rcs')
+  build_rcs()
+
+if __name__ == '__main__':
+  main()

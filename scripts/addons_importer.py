@@ -15,7 +15,17 @@ def get_data():
     shell = data['shell']
   return data, addons, shell
 
+def clone_addons(addons):
+  """Clone addons.
 
+  args:
+    addons: (list) Addons to clone.
+  """
+  for url in addons:
+    print('url: ' + url)
+    # os.system('cd addons; git clone ' + url + '; cd -')
+    # os.system(f'cd addons; git clone {url}; cd -')
+    helpers.run_cmd('cd addons; git clone {0}; cd -'.format(url))
 
 def main():
   if not dry_run('do this would happen now'):
@@ -33,12 +43,7 @@ def main():
   # print(data['shell'])
   # print(addons)
 
-  # --- Clone Addons ---
-  for url in addons:
-    print('url: ' + url)
-    # os.system('cd addons; git clone ' + url + '; cd -')
-    # os.system(f'cd addons; git clone {url}; cd -')
-    os.system('cd addons; git clone {0}; cd -'.format(url))
+  clone_addons(addons)
 
   print('Finished!')
 
