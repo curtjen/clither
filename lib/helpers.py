@@ -20,8 +20,6 @@ dry_run_flag = False
 if '--dry_run' in sys.argv:
   dry_run_flag = True
 
-print(dry_run_flag)
-
 def create_directory(dir):
   if dry_run('create dir ' + dir):
     return
