@@ -4,8 +4,13 @@ import sys
 
 def run_pathing_injections():
   CURRENT_DIR = os.getcwd()
-  lib_path = CURRENT_DIR + '/lib'
-  if lib_path not in sys.path:
-    sys.path.append(lib_path)
+  paths = (
+    CURRENT_DIR + '/lib',
+  )
+
+  for path in paths:
+    if path not in sys.path:
+      sys.path.append(path)
+
 
 run_pathing_injections()
