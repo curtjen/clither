@@ -4,12 +4,10 @@
 
 import json
 import os
-# from 'lib/helpers' import create_directory
-import helpers
-from helpers import dry_run
+from helpers import dry_run, run_cmd, create_directory, consts
 
 def get_json_data():
-  with open(helper.CONFIG_FILE) as file:
+  with open(consts.config_file) as file:
     data = json.load(file)
     addons = data['addons']
     shell = data['shell']
@@ -23,13 +21,13 @@ def clone_addons(addons):
   """
   print('Cloning addons...')
   for url in addons:
-    helpers.run_cmd('cd addons; git clone {0}; cd -'.format(url))
+    run_cmd('cd addons; git clone {0}; cd -'.format(url))
 
 def main():
   addons, shell = get_json_data()
 
   # --- Create Addons Directory ---
-  helpers.create_directory(helper.ADDONS_PATH)
+  create_directory(consts.addons_path)
 
   # _create_directory('addons')
   # os.system('mkdir addons')

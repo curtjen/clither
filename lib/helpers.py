@@ -15,6 +15,16 @@ import os
 import sys
 import time
 
+from collections import namedtuple
+
+constants = namedtuple('consts', ['config_file', 'addons_path'])
+
+#TODO(xnz): We need these paths
+consts = constants(
+  config_file='path',
+  addons_path='path'
+  )
+
 #TODO(xnz): figure out a way to make argparse play nice on libs.
 dry_run_flag = False
 if '--dry_run' in sys.argv:
