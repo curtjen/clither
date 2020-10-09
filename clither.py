@@ -21,15 +21,16 @@
 """
 
 import argparse
-import pather  # run before path imports
 import os
 
+# Pather Imports
+import pather  # run first
 import addons_importer
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
 FLAGS.add_argument('--addons_import', action='store_true', help='Run addons import.')
-FLAGS.add_argument('--install', nargs='?', help='Run install.')
+FLAGS.add_argument('--install', action='store_true', help='Run install.')
 # clither.sh install
 FLAGS = FLAGS.parse_args()
 

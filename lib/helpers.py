@@ -18,26 +18,32 @@ import time
 
 from collections import namedtuple
 
-constants = namedtuple('consts', ['config_file', 'addons_path'])
-
-#TODO(xnz): We need these paths
-consts = constants(
-  config_file='path',
-  addons_path='path'
-  )
-
-# def mk_obj_from_dict(blueprint_dict):
-#   class blankClass:
-#     pass
-
-#   used_obj = blankClass()
-#   used_obj._dict__ = blueprint_dict
-#   return used_obj
-
 #TODO(xnz): figure out a way to make argparse play nice on libs.
 dry_run_flag = False
 if '--dry_run' in sys.argv:
   dry_run_flag = True
+
+# Any json we use should (for now) should not use spaces or - in the key
+def dict_to_obj(blueprint_dict):
+  blueprint_list = list(blueprint_dict.keys())
+  proto = namedtuple('something', blueprint_list)
+  result_dict = proto(**blueprint_dict)
+  return result_dict
+
+#TODO(xnz): We need these paths, should be abstracted to a json file.
+file_paths = {
+  'config_file': 'path',
+  'addons_path': 'path'
+}
+
+paths = dict_to_obj(file_paths)
+
+def json_to_obj(json_file_path):
+  """Experemental"""
+  with open(json_file_path) as file:
+    data = json.load(file)
+  data = dict_to_obj(data)
+  return data
 
 def create_directory(dir):
   if dry_run('create dir ' + dir):
