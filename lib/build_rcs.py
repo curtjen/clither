@@ -3,55 +3,50 @@
 
 import json
 import os
-from helpers import create_directory
+from helpers import create_directory, paths, mk_clither_custom_dirs, append_to_file, clear_file
 
-ADDON_DIRS = os.listdir('addons')
-CURRENT_DIR = os.getcwd()
-HOME_DIR = os.environ['HOME']
+
 
 def _append_to_file(rc, addon_path, config_rc_path):
-  rc_dir_path = '{0}/clither_custom/rcs/{1}'.format(home_dir, rc)
-  # TODO(xnz): Strings with variables this way?
-  # rc_dir_path = home_dir + '/clither_custom/rcs/' + rc
+  rc_dir_path = '{0}//{1}'.format(paths.rcs_path, rc)
   new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
+  import_cmd = 'source {0}'.format(new_rc_path)
 
-  # FOR TROUBLESHOOTING
-  # print('\n####################')
-  # print('rc: {0}'.format(rc))
-  # print('addon_path: {0}'.format(addon_path))
-  # print('new_rc_path: {0}'.format(new_rc_path))
-  # print('bin_rc_path: {0}'.format(bin_rc_path))
-
-  # link to the addon's respective rc file
-  import_cmd = 'source {0}\n'.format(new_rc_path)
-
-  # append to respective rc file
-  with open(rc_dir_path, 'a') as file:
-    file.write(import_cmd)
+  clear_file(rc_dir_path)
+  append_to_file(rc_dir_path, import_cmd)
 
 def _build_rc_files(config, addon_path):
   # TODO(curjten): Account for appending bins to the PATH
-  for rc in config:
-    _append_to_file(rc, addon_path, config[rc])
+
+  for rc, config_rc_path in config.items():
+    _append_to_file(rc, addon_path, config_rc_path)
+
+# TODO(curtjen): Create function for getting clither.config.json
+#   - Add helpful errors like when the config file is not found.
 
 def build_rcs():
-  # Loop over each addon config
-  for dir in addons_dirs:
-    addon_path = '{0}/addons/{1}'.format(current_dir, dir)
-    config_path = '{0}/clither.config.json'.format(addon_path)
+  # TODO(curtjen): Move this to the helpers file.
+  addon_dirs = os.listdir(paths.base_dir + '/clither_custom/addons')
+  for dir in addon_dirs:
+    print('Run rcs on: ' + dir)
+    addon_path = '{0}/clither_custom/addons/{1}'.format(paths.base_dir, dir)
+    config_path = addon_path + '/clither.config.json'
 
-    # Do stuff with the config
     if os.path.exists(config_path):
       with open(config_path) as file:
         config = json.load(file)
-        _build_rc_files(config, addon_path)
+      _build_rc_files(config, addon_path)
+    else:
+      pass  #TODO(xnz): look for an override
 
 def main():
-  # get list of addon directories
+  print('-' * 40)
+  print('Start build_rcs...')
 
-  create_directory(home_dir + '/clither_custom')
-  create_directory(home_dir + '/clither_custom/rcs')
+  mk_clither_custom_dirs()
   build_rcs()
+
+  print('Finished build_rcs!')
 
 if __name__ == '__main__':
   main()

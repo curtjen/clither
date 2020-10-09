@@ -38,26 +38,29 @@ clither.sh
 |__ rcs/ <-- built by build_rcs.py -->
 |__ e.g zshrc, vimrc, bashrc, bash_profile, etc.
 |__ addons/ <-- git cloned pieces of the pie -->
-|   |__ .git/ <-- your own David Pumpkin -->
-|   |__ themes/ <-- custom created themes -->
-|   |__ config.json <-- customize which addons to get -->
-        - overrides
-          - {
-              [addon]: {
-                [rc]: "PATH"
-              }
-            }
-        - addons <-- repos with a clither config -->
-          - clither.config.json:
-            {
-              [rc]: "path/to/file",
-              bins: ["path/to/bin_file", "path/to/another_bin_file"],
-            }
-        - libraries <-- directories/repos with no clither config -->
-          - oh-my-zsh
-        - shell
-|   |__ overrides/
-|   |   |__ override.json
+|__ .git/ <-- your own David Pumpkin -->
+|__ themes/ <-- custom created themes -->
+|__ config.json <-- customize which addons to get -->
+    - overrides
+      - {
+          [addon]: {
+            [rc]: "PATH"
+          }
+        }
+    - addons <-- repos with a clither config -->
+      - clither.config.json:
+        {
+          [rc]: "path/to/file",
+          bins: ["path/to/bin_file", "path/to/another_bin_file"],
+        }
+    - libraries <-- directories/repos with no clither config -->
+      - oh-my-zsh
+    - shell
+
+by default
+~/cliter_custom/
+|__ .git/
+|__ config.json
 ```
 
 ### Architecture Breakdown

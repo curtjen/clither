@@ -4,7 +4,7 @@
 
 import json
 import os
-from helpers import dry_run, run_cmd, create_directory, paths
+from helpers import run_cmd, create_directory, paths, mk_clither_custom_dirs
 
 def clone_addons(addons):
   """Clone addons.
@@ -14,31 +14,24 @@ def clone_addons(addons):
   """
   print('Cloning addons...')
   for url in addons:
-    run_cmd('cd addons; git clone {0}; cd -'.format(url))
+    # TODO(curtjen): Abstract references to 'clither_custom/addons' and similar stuff to helpers.
+    run_cmd('cd {0}/clither_custom/addons; git clone {1}'.format(paths.base_dir, url))
 
 def get_json(json_file_path):
+  # TODO(curtjen): Try and fail safely for when no config exists
   with open(json_file_path) as file:
     data = json.load(file)
-  addons_path = data['addons_path']
-  config_file = data['config_file']
-  return addons_path, config_file
+  addons = data['addons']
+  return addons
 
 def main():
-  addons_path, config_file = get_json(paths.config_file)
-
-  # --- Create Addons Directory ---
-  create_directory(configs.addons_path)
-
-  # _create_directory('addons')
-  # os.system('mkdir addons')
-
-  # print(data['addons'])
-  # print(data['shell'])
-  # print(addons)
-
+  print('-' * 40)
+  print('Start addons_importer...')
+  mk_clither_custom_dirs()
+  addons = get_json(paths.addons_config)
   clone_addons(addons)
 
-  print('Finished!')
+  print('Finished addons_importer!')
 
 if __name__ == '__main__':
   main()

@@ -2,19 +2,21 @@
 
 import os
 import backup_rcs
+from helpers import create_symlink, paths
 
 bin_files = os.listdir('bin')
-home_dir = os.environ['HOME']
 current_dir = os.getcwd()
 
-def _create_symlink(src, dst):
-  os.symlink(src, dst)
-
-def generate_symlinks():
+def main():
   backup_rcs.main()
+  print('-' * 40)
+  print('Start generate_symlinks...')
   for rc in bin_files:
-    src = '{0}/{1}/{2}'.format(current_dir, 'bin', rc)
-    dst = '{0}/{1}'.format(home_dir, rc)
-    _create_symlink(src, dst)
+    src = '{0}/{1}/{2}'.format(paths.base_dir, 'bin', rc)
+    dst = '{0}/{1}'.format(paths.base_dir, rc)
+    create_symlink(src, dst)
 
-generate_symlinks()
+  print('Finished generate_symlinks!')
+
+if __name__ == '__main__':
+  main()
