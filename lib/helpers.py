@@ -12,6 +12,7 @@
 # This will create a symlink inside the $HOME directory for a given file path.
 
 import os
+import json
 import sys
 import time
 
@@ -24,6 +25,14 @@ consts = constants(
   config_file='path',
   addons_path='path'
   )
+
+# def mk_obj_from_dict(blueprint_dict):
+#   class blankClass:
+#     pass
+
+#   used_obj = blankClass()
+#   used_obj._dict__ = blueprint_dict
+#   return used_obj
 
 #TODO(xnz): figure out a way to make argparse play nice on libs.
 dry_run_flag = False
