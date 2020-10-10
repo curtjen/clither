@@ -29,7 +29,7 @@ def build_rcs():
   
   for dir in addon_dirs:
     print('Run rcs on: ' + dir)
-    addon_path = '{0}/clither_custom/addons/{1}'.format(paths.base_dir, dir)
+    addon_path = '{0}/{1}'.format(paths.addons_path, dir)
     config_path = addon_path + '/clither.config.json'
 
     if os.path.exists(config_path):
