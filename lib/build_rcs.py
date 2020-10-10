@@ -8,7 +8,7 @@ from helpers import create_directory, paths, mk_clither_custom_dirs, append_to_f
 
 
 def _append_to_file(rc, addon_path, config_rc_path):
-  rc_dir_path = '{0}//{1}'.format(paths.rcs_path, rc)
+  rc_dir_path = '{0}/{1}'.format(paths.rcs_path, rc)
   new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
   import_cmd = 'source {0}'.format(new_rc_path)
 

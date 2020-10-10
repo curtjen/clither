@@ -35,11 +35,12 @@ import pather  # run first
 import addons_importer
 import build_rcs
 import backup_rcs
+import mk_custom
 # import generate_symlinks
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
-FLAGS.add_argument('--init', action='store_true', help='sets up ../clither_custom.')
+FLAGS.add_argument('--mk_custom', action='store_true', help='sets up ../clither_custom.')
 FLAGS.add_argument('--addons_import', action='store_true', help='Run addons import.')
 FLAGS.add_argument('--build_rcs', action='store_true', help='Run build_rcs import.')
 FLAGS.add_argument('--install', action='store_true', help='Run install.')
@@ -49,7 +50,9 @@ FLAGS.add_argument('--generate_symlinks', action='store_true', help='Run generat
 FLAGS = FLAGS.parse_args()
 
 def main():
-  # print(FLAGS)
+  if FLAGS.mk_custom:
+    mk_custom.main()
+    return
   if FLAGS.install:
     print('Install all...')
     addons_importer.main()

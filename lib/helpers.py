@@ -17,6 +17,7 @@ import sys
 import time
 
 from collections import namedtuple
+from shutil import copy
 
 #TODO(xnz): figure out a way to make argparse play nice on libs.
 dry_run_flag = False
@@ -32,11 +33,22 @@ def dict_to_obj(blueprint_dict):
 
 #TODO(xnz): Put BASE_DIR in other file , file_paths dict comp from it. if no file then use home
 BASE_DIR = os.environ['HOME'] + '/dev/sandbox'
+# file_paths = {
+#   'base_dir': BASE_DIR,  # + is temps
+#   'custom_path': BASE_DIR + '/clither_custom/',
+#   'rcs_path': BASE_DIR + '/clither_custom/rcs',
+#   'addons_config': BASE_DIR + '/clither_custom/config.json',
+# }
+
 file_paths = {
-  'base_dir': BASE_DIR,  # + is temps
-  'addons_config': BASE_DIR + '/clither_custom/config.json',
-  'rcs_path': BASE_DIR + '/clither_custom/rcs',
+  'base_dir': '',  # + is temps
+  'custom_path':  '/clither_custom/',
+  'rcs_path':  '/clither_custom/rcs',
+  'addons_config': '/clither_custom/config.json',
+  'tmp_config': '/clither/config.json',
 }
+
+file_paths = {key: BASE_DIR + value for key, value in file_paths.items()}
 
 paths = dict_to_obj(file_paths)
 
@@ -77,7 +89,7 @@ def backup_file(file_path):
   # msg = 'backup_file: ' + file_path
   # if dry_run(msg):
   #   return
-
+ 
   if os.path.isfile(file_path):
     # get file name and containing directory
     dir_path = os.path.dirname(file_path)
@@ -145,4 +157,16 @@ def create_symlink(src, dst):
     return
 
   os.symlink(src, dst)
+  print(msg)
+
+def copy_file(src_file, dst):
+  dst = os.path.join(dst, os.path.basename(src_file))
+
+  if os.path.exists(dst):
+    return
+
+  msg = 'cp {0} {1}'.format(src_file, dst)
+  if dry_run(msg):
+    return
+  copy(src_file, dst)
   print(msg)

@@ -14,6 +14,7 @@ clither.sh
   - choose shell
   - oh-my-zshr or not
   - create directory structure and move clither files to it
+- make the clither_custom dir
 - Install
 - Update
 - Import addons
@@ -25,42 +26,41 @@ clither.sh
 ```
 
 ```plain
-~/clither/
-|   |__ .git/ <-- public CLIther tool -->
-|   |__ lib/
-|   |   |__ addons_importer.py
-|   |   |__ backup_rcs.py
-|   |   |__ build_rcs.py
-|   |   |__ library_importer.py
-|   |__ README.md
-|   |__ clither.sh <-- one file to rule them all -->
-~/.clither_custom/
-|__ rcs/ <-- built by build_rcs.py -->
-|__ e.g zshrc, vimrc, bashrc, bash_profile, etc.
-|__ addons/ <-- git cloned pieces of the pie -->
-|__ .git/ <-- your own David Pumpkin -->
-|__ themes/ <-- custom created themes -->
-|__ config.json <-- customize which addons to get -->
+../clither/
+|   └── .git/              <-- public CLIther tool -->
+|   └── lib/
+|   |   └── addons_importer.py
+|   |   └── backup_rcs.py
+|   |   └── build_rcs.py
+|   |   └── library_importer.py
+|   └── README.md
+|   └── clither.sh         <-- one file to rule them all -->
+../.clither_custom/        <-- Can be generated or saved as a repo -->
+└── rcs/                   <-- built by build_rcs.py -->
+└── e.g zshrc, vimrc, bashrc, bash_profile, etc.
+└── addons/                <-- git cloned pieces of the pie -->
+└── .git/                  <-- your own David Pumpkin -->
+└── themes/                <-- custom created themes -->
+└── config.json            <-- customize which addons to get -->
     - overrides
       - {
           [addon]: {
             [rc]: "PATH"
           }
         }
-    - addons <-- repos with a clither config -->
+    - addons              <-- repos with a clither config -->
       - clither.config.json:
         {
           [rc]: "path/to/file",
           bins: ["path/to/bin_file", "path/to/another_bin_file"],
         }
-    - libraries <-- directories/repos with no clither config -->
+    - libraries          <-- directories/repos with no clither config -->
       - oh-my-zsh
     - shell
 
-by default
-~/cliter_custom/
-|__ .git/
-|__ config.json
+by default, when run: $ clither --mk_custom
+../clither_custom
+└── config.json
 ```
 
 ### Architecture Breakdown
