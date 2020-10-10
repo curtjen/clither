@@ -165,3 +165,12 @@ def copy_file(src_file, dst):
     return
   copy(src_file, dst)
   print(msg)
+
+def get_dir_list(dir_path):
+  # os.listdir(dir_path)
+  try:
+    return os.listdir(dir_path)
+  except OSError as err:
+    if dry_run_flag:
+      return []
+    raise OSError(err)

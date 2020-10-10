@@ -3,7 +3,7 @@
 
 import json
 import os
-from helpers import create_directory, paths, mk_clither_custom_dirs, append_to_file, clear_file
+from helpers import create_directory, paths, mk_clither_custom_dirs, append_to_file, clear_file, get_dir_list
 
 
 
@@ -25,11 +25,7 @@ def _build_rc_files(config, addon_path):
 #   - Add helpful errors like when the config file is not found.
 
 def build_rcs():
-  # TODO(curtjen): Move this to the helpers file, w/ dry_run logic.
-  try:
-    addon_dirs = os.listdir(paths.addons_path)
-  except OSError:
-    addon_dirs = []
+  addon_dirs = get_dir_list(paths.addons_path)
   
   for dir in addon_dirs:
     print('Run rcs on: ' + dir)
