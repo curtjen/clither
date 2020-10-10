@@ -33,17 +33,12 @@ def dict_to_obj(blueprint_dict):
 
 #TODO(xnz): Put BASE_DIR in other file , file_paths dict comp from it. if no file then use home
 BASE_DIR = os.environ['HOME'] + '/dev/sandbox'
-# file_paths = {
-#   'base_dir': BASE_DIR,  # + is temps
-#   'custom_path': BASE_DIR + '/clither_custom/',
-#   'rcs_path': BASE_DIR + '/clither_custom/rcs',
-#   'addons_config': BASE_DIR + '/clither_custom/config.json',
-# }
 
 file_paths = {
   'base_dir': '',  # + is temps
   'custom_path':  '/clither_custom/',
   'rcs_path':  '/clither_custom/rcs',
+  'addons_path': '/clither_custom/addons',
   'addons_config': '/clither_custom/config.json',
   'tmp_config': '/clither/config.json',
 }

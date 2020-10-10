@@ -10,7 +10,13 @@ def main():
   print('-' * 40)
   print('Start backup_rcs...')
   dot_files = {x[1:] for x in os.listdir(paths.base_dir) if x.startswith('.')}
-  rc_files = set(os.listdir(paths.rcs_path))
+  #TODO(xnz): same a build_rcs, we should put this kind of thing in helper.
+  try:
+    rc_files = os.listdir(paths.rcs_path)
+  except OSError:
+    rc_files = []
+
+  rc_files = set(rc_files)
   dot_files_to_backup = dot_files.intersection(rc_files)
 
   for dot_file in dot_files_to_backup:

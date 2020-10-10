@@ -1,10 +1,14 @@
 #!/bin/env python
 """
 """
-
 import json
 import os
 from helpers import run_cmd, create_directory, paths, mk_clither_custom_dirs
+
+EXCEPTION_TMP = """Config file does not exist: {0}
+
+To generate, then edit, a template config.json try running: 
+    $ ./clither --mk_custom; vi ../clither_custom/config.json"""
 
 def clone_addons(addons):
   """Clone addons.
@@ -28,7 +32,12 @@ def main():
   print('-' * 40)
   print('Start addons_importer...')
   mk_clither_custom_dirs()
-  addons = get_json(paths.addons_config)
+  try:
+    addons = get_json(paths.addons_config)
+  except IOError:
+    msg = EXCEPTION_TMP.format(paths.addons_config)
+    raise Exception(msg)
+
   clone_addons(addons)
 
   print('Finished addons_importer!')

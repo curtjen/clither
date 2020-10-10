@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 """
 
+$ ./clither.py --mk_custom
+----------------------------------------
+Start mk_custom...
+mkdir ../clither_custom/
+cp ../sandbox/clither/config.json ../clither_custom/config.json
+Finished mk_custom!
+
+
 $./clither.py --addons_import --dry_run
 ----------------------------------------
 Start addons_importer...
@@ -9,24 +17,6 @@ Cloning addons...
         dry_run: run cmd: cd addons; git clone https://github.com/curtjen/rcs
 Finished addons_importer!
 """
-
-# --- Compile list of files ---
-# TODO: Get Base.
-# -- Check "shell" in config. Default to bash.
-#
-# TODO: Get Addons.
-# --- Import Addons ---
-# python ./scripts/addons_importer.py;
-
-# --- Build RCs ---
-# TODO: Write files to bin/ directory
-# python ./scripts/build_rcs.py;
-
-# # --- Create Aliases ---
-# python ./scripts/generate_symlinks.py;
-# TODO: Create aliases for new RC file.
-# TODO: Backup existing and move old/existing RCs.
-
 import argparse
 import os
 
@@ -54,6 +44,7 @@ def main():
     mk_custom.main()
     return
   if FLAGS.install:
+    #TODO(xnz): add in halt logic, maybe a for?
     print('Install all...')
     addons_importer.main()
     build_rcs.main()
