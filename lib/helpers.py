@@ -17,6 +17,7 @@ import sys
 import time
 
 from collections import namedtuple
+from glob import glob
 from shutil import copy
 
 #TODO(xnz): figure out a way to make argparse play nice on libs.
@@ -174,3 +175,7 @@ def get_dir_list(dir_path):
     if dry_run_flag:
       return []
     raise OSError(err)
+
+
+def get_globed_dirs(pattern):
+  return [dir for dir in glob(pattern) if os.path.isdir(dir)]
