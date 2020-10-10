@@ -159,6 +159,7 @@ def copy_file(src_file, dst):
   dst = os.path.join(dst, os.path.basename(src_file))
 
   if os.path.exists(dst):
+    print('copy_file: dst already exists: ' + dst)
     return
 
   msg = 'cp {0} {1}'.format(src_file, dst)
@@ -175,7 +176,6 @@ def get_dir_list(dir_path):
     if dry_run_flag:
       return []
     raise OSError(err)
-
 
 def get_globed_dirs(pattern):
   return [dir for dir in glob(pattern) if os.path.isdir(dir)]
