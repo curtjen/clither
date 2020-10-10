@@ -39,6 +39,7 @@ import backup_rcs
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
+FLAGS.add_argument('--init', action='store_true', help='sets up ../clither_custom.')
 FLAGS.add_argument('--addons_import', action='store_true', help='Run addons import.')
 FLAGS.add_argument('--build_rcs', action='store_true', help='Run build_rcs import.')
 FLAGS.add_argument('--install', action='store_true', help='Run install.')
@@ -71,8 +72,8 @@ def main():
   if FLAGS.backup_rcs:
     backup_rcs.main()
 
-  # if FLAGS.generate_symlinks:
-  #   generate_symlinks.main()
+  if FLAGS.generate_symlinks:
+    generate_symlinks.main()
 
 if __name__ == '__main__':
   main()
