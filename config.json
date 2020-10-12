@@ -1,6 +1,6 @@
 {
   "addons": [
-    "https://github.com/curtjen/clither_custom_example"
+    "https://github.com/curtjen/clither_addon_example"
   ],
   "shell": "zsh"
 }
