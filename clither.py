@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 
-First time run:
+The first time run:
 $ ./clither.py --mk_custom && ./clither.py --install
 ...
 $ tree
