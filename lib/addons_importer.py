@@ -18,8 +18,7 @@ def clone_addons(addons):
   """
   print('Cloning addons...')
   for url in addons:
-    # TODO(curtjen): Abstract references to 'clither_custom/addons' and similar stuff to helpers.
-    run_cmd('cd {0}/clither_custom/addons; git clone {1}'.format(paths.base_dir, url))
+    run_cmd('cd {0}; git clone {1}'.format(paths.addons_path, url))
 
 def get_json(json_file_path):
   # TODO(curtjen): Try and fail safely for when no config exists
