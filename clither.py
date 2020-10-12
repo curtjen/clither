@@ -40,6 +40,8 @@ FLAGS.add_argument('--generate_symlinks', action='store_true', help='Run generat
 FLAGS = FLAGS.parse_args()
 
 def main():
+
+
   if FLAGS.mk_custom:
     mk_custom.main()
     return
@@ -48,7 +50,7 @@ def main():
     print('Install all...')
     addons_importer.main()
     build_rcs.main()
-    backup_rcs.main()
+    # backup_rcs.main()
     # generate_symlinks.main()
     #   - rename/backup
     # - dry run
