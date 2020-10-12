@@ -2,7 +2,15 @@
 """
 
 The first time run:
-$ ./clither.py --mk_custom && ./clither.py --install
+$ ./clither.py --mk_custom &&\
+  ./clither.py --install
+
+You can then check the install structure:
+$ [ $(tree|shasum|awk '{print $1}') = "3589ee917d209cd13d1a09204e1038f7e88611eb" ] &&\
+  echo "Structure was initinalize correctly." ||\
+  echo "Something went wrong."
+
+If this runs clean then you are good to go.
 ...
 $ tree
 .
