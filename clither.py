@@ -50,7 +50,7 @@ def main():
     addons_importer.main()
     build_rcs.main()
     backup_rcs.main()
-    generate_symlinks.main()
+    # generate_symlinks.main()
     #   - rename/backup
     # - dry run
     # - update any paths that come from helpers
