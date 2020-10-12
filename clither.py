@@ -1,21 +1,50 @@
 #!/usr/bin/env python
 """
 
-$ ./clither.py --mk_custom
-----------------------------------------
-Start mk_custom...
-mkdir ../clither_custom/
-cp ../sandbox/clither/config.json ../clither_custom/config.json
-Finished mk_custom!
+First time run:
+$ ./clither.py --mk_custom && ./clither.py --install
+...
+$ tree
+.
+├── clither
+│   ├── LICENSE
+│   ├── README.md
+│   ├── clither.py
+│   ├── config.json
+│   ├── init
+│   ├── lib
+│   │   ├── addons_importer.py
+│   │   ├── addons_importer.pyc
+│   │   ├── backup_rcs.py
+│   │   ├── backup_rcs.pyc
+│   │   ├── build_rcs.py
+│   │   ├── build_rcs.pyc
+│   │   ├── generate_config.py
+│   │   ├── generate_symlinks.py
+│   │   ├── generate_symlinks.pyc
+│   │   ├── helpers.py
+│   │   ├── helpers.pyc
+│   │   ├── mk_custom.py
+│   │   └── mk_custom.pyc
+│   ├── pather.py
+│   ├── pather.pyc
+│   └── scripts
+│       └── helpers.pyc
+├── clither_custom
+│   ├── addons
+│   │   └── clither_addon_example
+│   │       ├── clither.config.json
+│   │       └── rcs
+│   │           ├── vimrc
+│   │           └── zshrc
+│   ├── config.json
+│   └── rcs
+│       ├── vimrc
+│       └── zshrc
+├── vimrc -> ./clither_custom/rcs/./clither_custom/rcs
+└── zshrc -> ./clither_custom/rcs/./clither_custom/rcs
 
-
-$./clither.py --addons_import --dry_run
-----------------------------------------
-Start addons_importer...
-        dry_run: mkdir ../i_danno
-Cloning addons...
-        dry_run: run cmd: cd addons; git clone https://github.com/curtjen/rcs
-Finished addons_importer!
+10 directories, 33 files
 """
 import argparse
 import os
