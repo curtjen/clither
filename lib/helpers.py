@@ -32,8 +32,13 @@ def dict_to_obj(blueprint_dict):
   result_dict = proto(**blueprint_dict)
   return result_dict
 
-#TODO(xnz): Put BASE_DIR in other file , file_paths dict comp from it. if no file then use home
-BASE_DIR = os.environ['HOME'] + '/dev/sandbox'
+BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+
+# post 3.4 use:
+# from pathlib import Path
+# path = Path("/here/your/path/file.txt")
+# print(path.parent)
+
 
 file_paths = {
   'base_dir': '',  # + is temps

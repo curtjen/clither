@@ -21,12 +21,12 @@ import argparse
 import os
 
 # Pather Imports
-import pather  # run first
+import pather  # run first only works if run from ./
 import addons_importer
 import build_rcs
 import backup_rcs
 import mk_custom
-# import generate_symlinks
+import generate_symlinks
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
@@ -40,18 +40,17 @@ FLAGS.add_argument('--generate_symlinks', action='store_true', help='Run generat
 FLAGS = FLAGS.parse_args()
 
 def main():
-
-
   if FLAGS.mk_custom:
     mk_custom.main()
     return
+
   if FLAGS.install:
     #TODO(xnz): add in halt logic, maybe a for?
     print('Install all...')
     addons_importer.main()
     build_rcs.main()
-    # backup_rcs.main()
-    # generate_symlinks.main()
+    backup_rcs.main()
+    generate_symlinks.main()
     #   - rename/backup
     # - dry run
     # - update any paths that come from helpers
