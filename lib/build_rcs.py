@@ -35,7 +35,13 @@ def build_rcs():
     if os.path.exists(config_path):
       with open(config_path) as file:
         config = json.load(file)
-      _build_rc_files(config, addon_path)
+      rcs = config.setdefault('rcs')
+
+      if not rcs:
+        print('File does not have rcs section: ' + config_path)
+        return
+
+      _build_rc_files(rcs, addon_path)
     else:
       pass  #TODO(xnz): look for an override
 

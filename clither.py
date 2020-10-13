@@ -2,57 +2,8 @@
 """
 
 The first time run:
-$ ./clither.py --mk_custom &&\
-  ./clither.py --install
+$ ./clither.py --mk_custom --install
 
-You can then check the install structure:
-$ [ $(tree|shasum|awk '{print $1}') = "3589ee917d209cd13d1a09204e1038f7e88611eb" ] &&\
-  echo "Structure was initinalize correctly." ||\
-  echo "Something went wrong."
-
-If this runs clean then you are good to go.
-...
-$ tree
-.
-├── clither
-│   ├── LICENSE
-│   ├── README.md
-│   ├── clither.py
-│   ├── config.json
-│   ├── init
-│   ├── lib
-│   │   ├── addons_importer.py
-│   │   ├── addons_importer.pyc
-│   │   ├── backup_rcs.py
-│   │   ├── backup_rcs.pyc
-│   │   ├── build_rcs.py
-│   │   ├── build_rcs.pyc
-│   │   ├── generate_config.py
-│   │   ├── generate_symlinks.py
-│   │   ├── generate_symlinks.pyc
-│   │   ├── helpers.py
-│   │   ├── helpers.pyc
-│   │   ├── mk_custom.py
-│   │   └── mk_custom.pyc
-│   ├── pather.py
-│   ├── pather.pyc
-│   └── scripts
-│       └── helpers.pyc
-├── clither_custom
-│   ├── addons
-│   │   └── clither_addon_example
-│   │       ├── clither.config.json
-│   │       └── rcs
-│   │           ├── vimrc
-│   │           └── zshrc
-│   ├── config.json
-│   └── rcs
-│       ├── vimrc
-│       └── zshrc
-├── vimrc -> ./clither_custom/rcs/./clither_custom/rcs
-└── zshrc -> ./clither_custom/rcs/./clither_custom/rcs
-
-10 directories, 33 files
 """
 import argparse
 import os
@@ -79,7 +30,6 @@ FLAGS = FLAGS.parse_args()
 def main():
   if FLAGS.mk_custom:
     mk_custom.main()
-    return
 
   if FLAGS.install:
     #TODO(xnz): add in halt logic, maybe a for?
