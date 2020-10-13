@@ -15,6 +15,7 @@ import build_rcs
 import backup_rcs
 import mk_custom
 import generate_symlinks
+import build_bins
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
@@ -24,7 +25,7 @@ FLAGS.add_argument('--build_rcs', action='store_true', help='Run build_rcs impor
 FLAGS.add_argument('--install', action='store_true', help='Run install.')
 FLAGS.add_argument('--backup_rcs', action='store_true', help='Run backup of existing RCs.')
 FLAGS.add_argument('--generate_symlinks', action='store_true', help='Run generating symlinks.')
-# clither.sh install
+FLAGS.add_argument('--build_bins', action='store_true', help='Run build_bins.')
 FLAGS = FLAGS.parse_args()
 
 def main():
@@ -56,6 +57,10 @@ def main():
 
   if FLAGS.generate_symlinks:
     generate_symlinks.main()
+
+  if FLAGS.build_bins:
+    print('here')
+    build_bins.main()
 
 if __name__ == '__main__':
   main()

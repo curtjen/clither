@@ -109,8 +109,8 @@ def backup_file(file_path):
     msg = 'backup_file: cp {0} {1}'.format(file_path, dst_file_path)
     if dry_run(msg):
       return
-    os.rename(file_path, dst_file_path)
     print(msg)
+    os.rename(file_path, dst_file_path)
 
 def clear_file(file_path):
   msg = 'clear_file: ' + file_path
@@ -118,18 +118,18 @@ def clear_file(file_path):
     return
 
   #TODO(xnz): Check for better way to do this.
+  print(msg)
   with open(file_path, 'w') as file:
     file.write('')
-  print(msg)
 
 def append_to_file(file_path, string):
   msg = 'append_to_file: echo {0} >> {1}'.format(string, file_path)
   if dry_run(msg):
     return
 
+  print(msg)
   with open(file_path, 'a') as file:
     file.write(string + '\n')
-  print(msg)
 
 def dry_run(msg):
   """Return True and print msg if dry_run flag is set, else return False."""
@@ -148,8 +148,8 @@ def run_cmd(cmd):
   if dry_run(msg):
     return
   #TODO(xnz): mv this to a subprocess
-  os.system(cmd)
   print(msg)
+  os.system(cmd)
 
 def create_symlink(src, dst):
   # check if already exists
@@ -157,8 +157,8 @@ def create_symlink(src, dst):
   if dry_run(msg):
     return
 
-  os.symlink(src, dst)
   print(msg)
+  os.symlink(src, dst)
 
 def copy_file(src_file, dst):
   dst = os.path.join(dst, os.path.basename(src_file))
@@ -170,8 +170,9 @@ def copy_file(src_file, dst):
   msg = 'cp {0} {1}'.format(src_file, dst)
   if dry_run(msg):
     return
-  copy(src_file, dst)
+
   print(msg)
+  copy(src_file, dst)
 
 def get_dir_list(dir_path):
   # os.listdir(dir_path)
