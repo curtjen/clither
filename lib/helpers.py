@@ -45,6 +45,7 @@ file_paths = {
   'custom_path':  '/clither_custom/',
   'rcs_path':  '/clither_custom/rcs',
   'addons_path': '/clither_custom/addons',
+  'bin_path': '/clither_custom/bins
   'addons_config': '/clither_custom/config.json',
   'tmp_config': '/clither/config.json',
 }
@@ -185,3 +186,30 @@ def get_dir_list(dir_path):
 
 def get_globed_dirs(pattern):
   return [dir for dir in glob(pattern) if os.path.isdir(dir)]
+
+def process_area(area_of_interest, process_func, missing_config_func):
+  addon_dirs = get_dir_list(paths.addons_path)
+  for dir in addon_dirs:
+    print('Run {0} on: {1}'.format(area_of_interest, dir))
+  
+    addon_path = '{0}/{1}'.format(paths.addons_path, dir)
+    config_path = addon_path + '/clither.config.json'
+
+    if os.path.exists(config_path):
+      with open(config_path) as file:
+        try:  #TODO(xnz): ask cjensen if we want this to crash or not
+          config = json.load(file)
+        except JSONDecodeError::
+          print('file format was not a json:', config_path) # mark better
+          continue
+
+      result = config.setdefault(area_of_interest)
+
+      if not result:
+        msg = 'File does not have {0} section: {1}'
+        print(msg.format(area_of_interest, config_path))
+        return
+      
+      process_func(result, addon_path)
+    else:
+      missing_config_func(dir)
