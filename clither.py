@@ -18,14 +18,22 @@ import generate_symlinks
 import build_bins
 
 FLAGS = argparse.ArgumentParser(__doc__)
-FLAGS.add_argument('--dry_run', action='store_true', help='Run without doing anything.')
-FLAGS.add_argument('--mk_custom', action='store_true', help='sets up ../clither_custom.')
-FLAGS.add_argument('--addons_import', action='store_true', help='Run addons import.')
-FLAGS.add_argument('--build_rcs', action='store_true', help='Run build_rcs import.')
-FLAGS.add_argument('--install', action='store_true', help='Run install.')
-FLAGS.add_argument('--backup_rcs', action='store_true', help='Run backup of existing RCs.')
-FLAGS.add_argument('--generate_symlinks', action='store_true', help='Run generating symlinks.')
-FLAGS.add_argument('--build_bins', action='store_true', help='Run build_bins.')
+FLAGS.add_argument('--dry_run', action='store_true',
+  help='Run without doing anything.')
+FLAGS.add_argument('--mk_custom', action='store_true',
+  help='sets up ../clither_custom.')
+FLAGS.add_argument('--addons_import', action='store_true',
+  help='Run addons import.')
+FLAGS.add_argument('--build_rcs', action='store_true',
+  help='Run build_rcs import.')
+FLAGS.add_argument('--install', action='store_true',
+  help='Run install.')
+FLAGS.add_argument('--backup_rcs', action='store_true',
+  help='Run backup of existing RCs.')
+FLAGS.add_argument('--generate_symlinks', action='store_true',
+  help='Run generating symlinks.')
+FLAGS.add_argument('--build_bins', action='store_true',
+  help='Run build_bins.')
 FLAGS = FLAGS.parse_args()
 
 def main():

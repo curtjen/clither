@@ -26,7 +26,6 @@ def main():
   mk_clither_custom_dirs()
   process_area('rcs', _build_rc_files, _override)
 
-
   print('Finished build_rcs!')
 
 if __name__ == '__main__':
