@@ -21,8 +21,7 @@ def _build_paths(config, addon_path):
 
     # Option 2
     print('  or just the dir: create_symlink({0}, {1})'.format(src_dir_path, paths.bin_path))
-
-  
+    print('  in this case you will need to add {0} to PATH'.format(src_dir_path))
 
 def _override(dir):
   pass
