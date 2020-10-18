@@ -45,7 +45,7 @@ file_paths = {
   'custom_path':  '/clither_custom/',
   'rcs_path':  '/clither_custom/rcs',
   'addons_path': '/clither_custom/addons',
-  'bin_path': '/clither_custom/bins
+  'bin_path': '/clither_custom/bins',
   'addons_config': '/clither_custom/config.json',
   'tmp_config': '/clither/config.json',
 }
@@ -80,7 +80,6 @@ def mk_clither_custom_dirs():
   )
   for dir in dirs:
     create_directory('{0}/clither_custom/{1}'.format(paths.base_dir, dir))
-
 
 def backup_file(file_path):
   """Backup file at a given path.
@@ -199,7 +198,7 @@ def process_area(area_of_interest, process_func, missing_config_func):
       with open(config_path) as file:
         try:  #TODO(xnz): ask cjensen if we want this to crash or not
           config = json.load(file)
-        except JSONDecodeError::
+        except JSONDecodeError:
           print('file format was not a json:', config_path) # mark better
           continue
 
