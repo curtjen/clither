@@ -46,6 +46,7 @@ file_paths = {
   'rcs_path':  '/clither_custom/rcs',
   'addons_path': '/clither_custom/addons',
   'bin_path': '/clither_custom/bins',
+  'bin_conflicts_path': '/clither_custom/bins/conflicts',
   'addons_config': '/clither_custom/config.json',
   'tmp_config': '/clither/config.json',
 }
