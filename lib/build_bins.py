@@ -62,6 +62,7 @@ def _override(dir):
 def mk_paths_links():
   #print(os.environ)
   print('Rm symlinks in paths.bin_path of the form ^path_\d+')
+  print('or maybe just rm content of path.bin_path?')
   print('Get content for $PATH, exclued clither_custom')  # not sure how to do this yet
   sys_bin_paths = '/Users/phuntzinger/.nvm/versions/node/v10.15.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/munki:/Users/phuntzinger/bin'
   sys_bin_paths = sys_bin_paths.split(':')
