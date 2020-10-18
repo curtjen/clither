@@ -78,6 +78,8 @@ def mk_clither_custom_dirs():
     '',  # base dir
     'rcs',
     'addons',
+    'bins',
+    'bins/conflicts'
   )
   for dir in dirs:
     create_directory('{0}/clither_custom/{1}'.format(paths.base_dir, dir))
@@ -159,6 +161,10 @@ def create_symlink(src, dst):
     return
 
   print(msg)
+
+  if os.path.exists(dst):
+    os.remove(dst)
+
   os.symlink(src, dst)
 
 def copy_file(src_file, dst):
@@ -199,7 +205,7 @@ def process_area(area_of_interest, process_func, missing_config_func):
       with open(config_path) as file:
         try:  #TODO(xnz): ask cjensen if we want this to crash or not
           config = json.load(file)
-        except JSONDecodeError:
+        except json.JSONDecodeError:
           print('file format was not a json:', config_path) # mark better
           continue
 
