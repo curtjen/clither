@@ -2,9 +2,11 @@
 """Build bins."""
 import json
 import os
-from helpers import paths, mk_clither_custom_dirs, append_to_file, clear_file, process_area, get_dir_list
+from helpers import (paths, mk_clither_custom_dirs, append_to_file, clear_file, 
+  process_area, get_dir_list, create_symlink, create_directory)
 
 def get_new_path(path, prefix):
+    #TODO(xnz): not system portable...
     new_path = path.replace('/', '+')
     new_path = '{0}_{1}'.format(prefix, new_path)
     new_path = os.path.join(paths.bin_path, new_path)
@@ -12,14 +14,13 @@ def get_new_path(path, prefix):
 
 def _build_paths(config, addon_path):
   direct_link_dict = {}
-  print('-' * 40)
   # if the paths file does not exists
   # verify that the shellrc has a connection to paths file
   for bin_path in config:
     new_path = get_new_path(bin_path, 'addon')
 
     src_dir_path = os.path.join(addon_path, bin_path)
-    print('create_symlink({0}, {1})'.format(src_dir_path, new_path))
+    create_symlink(src_dir_path, new_path)
 
     file_names = get_dir_list(src_dir_path)
 
@@ -34,18 +35,15 @@ def _build_paths(config, addon_path):
       first = True
       for src in src_list:
         if first:
-          print('create_symlink({0}, {1})'.format(src, dst))
+          create_symlink(src, dst)
           first = False
           continue
 
-        print('create_directory({0})'.format(paths.bin_conflicts_path))
+        create_directory(paths.bin_conflicts_path)
         conflict_dst = get_new_path(src, 'conflict')
         conflict_dst = os.path.join(paths.bin_conflicts_path, conflict_dst)
 
-        print('create_symlink({0}, {1})'.format(src, conflict_dst))
-
-    # Option 2
-
+        create_symlink(src, conflict_dst)
 
 def _override(dir):
   pass
@@ -65,9 +63,8 @@ def mk_paths_links():
       # not sure this is right? but ok for now
       continue
 
-    #TODO(xnz): not system portable...
     new_path = get_new_path(sys_bin_path, index)
-    print('create_symlink(({0}, {1})'.format(sys_bin_path, new_path))
+    create_symlink(sys_bin_path, new_path)
     # Maybe the name should be ###_user+local+bin, etc
 
 def main():
@@ -76,9 +73,9 @@ def main():
 
   mk_clither_custom_dirs()
   mk_paths_links()
-  print('make sure clither_custom/bin is in $PATH')
+  print('TODO: make sure clither_custom/bin is in $PATH')
 
-  process_area('bins', _build_paths, _override)  #
+  process_area('bins', _build_paths, _override)
 
   print('Finished build_bins!')
 

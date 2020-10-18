@@ -67,7 +67,6 @@ def main():
     generate_symlinks.main()
 
   if FLAGS.build_bins:
-    print('here')
     build_bins.main()
 
 if __name__ == '__main__':
