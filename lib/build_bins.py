@@ -31,16 +31,16 @@ def main():
   print('Start build_bins...')
 
   #print(os.environ)
-  print('Get content for $PATH, and make sure you dont have clither_custom in there')  # will look like:
+  print('Get content for $PATH, exclued clither_custom')  # will look like:
   sys_bin_paths = '/Users/phuntzinger/.nvm/versions/node/v10.15.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/munki:/Users/phuntzinger/bin'
   sys_bin_paths = sys_bin_paths.split(':')
   print('clear out everyting in clither_custom/bin')
-  for sys_bin_path in sys_bin_paths:
+  for sys_bin_path in sys_bin_paths:  # use enumerate and put on base name #_basename for new path, if option 2 pass last one in so can contineue, will also need to format to a 01 type thing
     print('create_symlink(({0}, {1})'.format(sys_bin_path, paths.bin_path))
   print('make sure clither_custom/bin is in $PATH')
 
   # mk_clither_custom_dirs()
-  process_area('bins', _build_paths, _override)
+  process_area('bins', _build_paths, _override)  #
 
   print('Finished build_bins!')
 
