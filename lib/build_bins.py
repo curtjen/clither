@@ -40,6 +40,7 @@ def _build_paths(config, addon_path):
       result.append(src_full_path)
 
     for dst, src_list in direct_link_dict.items():
+      # This is a bit nasty for 2.7, 3.x can use first, *remander syntax
       first = True
       for src in src_list:
         if first:
