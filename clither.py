@@ -4,6 +4,9 @@
 The first time run:
 $ ./clither.py --mk_custom --install
 
+Useful reselt:
+$ rm -rf ../clither_custom && ./clither.py --install --mk_custom
+
 """
 import argparse
 import os

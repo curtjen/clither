@@ -12,7 +12,7 @@ def main():
   rc_files = get_dir_list(paths.rcs_path)
   for rc_file in rc_files:
     src = '{0}/{1}'.format(paths.rcs_path, rc_file)
-    dst = '{0}/{1}'.format(paths.base_dir, rc_file)
+    dst = '{0}/.{1}'.format(paths.base_dir, rc_file)
     create_symlink(src, dst)
 
   print('Finished generate_symlinks!')
