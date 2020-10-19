@@ -1,10 +1,12 @@
 #!/bin/env python
 """Build bins."""
+import calendar
 import json
 import re
 import shutil
+import time
 import os
-from helpers import (paths, mk_clither_custom_dirs, append_to_file, clear_file, 
+from helpers import (paths, mk_clither_custom_dirs, append_to_file, 
   process_area, get_dir_list, create_symlink, create_directory)
 
 def get_new_path(path, prefix):
@@ -19,7 +21,7 @@ def _build_paths(config, addon_path):
   # if the paths file does not exists
   # verify that the shellrc has a connection to paths file
   for bin_path in config:
-    bin_path = os.path.join(addon_path, bin_path)
+    bin_path = os.path.join(addon_path, 'bins', bin_path)
     new_path = get_new_path(bin_path, 'addon')
 
     src_dir_path = os.path.join(addon_path, bin_path)
@@ -29,6 +31,9 @@ def _build_paths(config, addon_path):
 
     for file_name in file_names:
       src_full_path = os.path.join(src_dir_path, file_name)
+      if os.path.isdir(src_full_path):
+        continue
+
       dst_full_path = os.path.join(paths.bin_path, file_name)
 
       result = direct_link_dict.setdefault(dst_full_path, [])
@@ -43,8 +48,9 @@ def _build_paths(config, addon_path):
           continue
 
         create_directory(paths.bin_conflicts_path)
-        conflict_dst = get_new_path(src, 'conflict')
-        #TODO(xnz): putting this one lvl too low.
+        epoch_time = str(calendar.timegm(time.gmtime()))
+        src_base = os.path.basename(src)
+        conflict_dst = '{0}_{1}'.format(epoch_time, src_base)
         conflict_dst = os.path.join(paths.bin_conflicts_path, conflict_dst)
         create_symlink(src, conflict_dst)
 

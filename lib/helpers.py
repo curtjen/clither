@@ -205,7 +205,7 @@ def process_area(area_of_interest, process_func, missing_config_func):
       with open(config_path) as file:
         try:  #TODO(xnz): ask cjensen if we want this to crash or not
           config = json.load(file)
-        except json.JSONDecodeError:
+        except ValueError:
           print('file format was not a json:', config_path) # mark better
           continue
 
