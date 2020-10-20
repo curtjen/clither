@@ -40,15 +40,22 @@ BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 # path = Path("/here/your/path/file.txt")
 # print(path.parent)
 
+#TODO(xnz): mk naming consistent.
 file_paths = {
   'base_dir': '',  # + is temps
+  'clither_path': '/clither',
+  'clither_lib_path': '/clither/lib',
+  'clither_pather': '/clither/pather.py',
+  'clither_run': '/clither/template_files/run.py',
+  'clither_run_help': '/clither/template_files/helper.py',  # may fold this into lib/helper
+  'tmp_config': '/clither/template_files/config.json',
   'custom_path':  '/clither_custom/',
+  'custom_lib_path': '/clither_custom/lib',
   'rcs_path':  '/clither_custom/rcs',
   'addons_path': '/clither_custom/addons',
   'bin_path': '/clither_custom/bins',
   'bin_conflicts_path': '/clither_custom/bins/conflicts',
   'addons_config': '/clither_custom/config.json',
-  'tmp_config': '/clither/config.json',
 }
 
 file_paths = {key: BASE_DIR + value for key, value in file_paths.items()}
