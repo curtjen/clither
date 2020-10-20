@@ -11,8 +11,9 @@
 # --- create_symlink("FILE_PATH") ---
 # This will create a symlink inside the $HOME directory for a given file path.
 
-import os
+import calendar
 import json
+import os
 import sys
 import time
 
@@ -28,7 +29,7 @@ if '--dry_run' in sys.argv:
 # Any json we use should (for now) should not use spaces or - in the key
 def dict_to_obj(blueprint_dict):
   blueprint_list = list(blueprint_dict.keys())
-  proto = namedtuple('dynamic_holder', blueprint_list)
+  proto = namedtuple('dynamicHolder', blueprint_list)
   result_dict = proto(**blueprint_dict)
   return result_dict
 
@@ -38,7 +39,6 @@ BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 # from pathlib import Path
 # path = Path("/here/your/path/file.txt")
 # print(path.parent)
-
 
 file_paths = {
   'base_dir': '',  # + is temps
@@ -219,3 +219,6 @@ def process_area(area_of_interest, process_func, missing_config_func):
       process_func(result, addon_path)
     else:
       missing_config_func(dir)
+
+def get_epoc_time():
+  return str(calendar.timegm(time.gmtime()))

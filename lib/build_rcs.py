@@ -5,6 +5,7 @@ import json
 import os
 from helpers import paths, mk_clither_custom_dirs, append_to_file, clear_file, process_area
 
+#TODO(xnz): deal with name colltions.
 def _build_rc_files(rc_dict, addon_path):
   for rc, config_rc_path in rc_dict.items():
     rc_dir_path = '{0}/{1}'.format(paths.rcs_path, rc)
