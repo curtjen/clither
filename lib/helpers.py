@@ -44,18 +44,20 @@ BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 file_paths = {
   'base_dir': '',  # + is temps
   'clither_path': '/clither',
-  'clither_lib_path': '/clither/lib',
+  'clither_lib_path': '/clither/template_files',
+  'clither_tmp_files_path': '/clither/lib',
   'clither_pather': '/clither/pather.py',
   'clither_run': '/clither/template_files/run.py',
   'clither_run_help': '/clither/template_files/helper.py',  # may fold this into lib/helper
-  'tmp_config': '/clither/template_files/config.json',
+  'clither_tmp_config': '/clither/template_files/config.json',
+
   'custom_path':  '/clither_custom/',
   'custom_lib_path': '/clither_custom/lib',
-  'rcs_path':  '/clither_custom/rcs',
-  'addons_path': '/clither_custom/addons',
-  'bin_path': '/clither_custom/bins',
-  'bin_conflicts_path': '/clither_custom/bins/conflicts',
-  'addons_config': '/clither_custom/config.json',
+  'custom_rcs_path':  '/clither_custom/rcs',
+  'custom_addons_path': '/clither_custom/addons',
+  'custom_bin_path': '/clither_custom/bins',
+  'custom_bin_conflicts_path': '/clither_custom/bins/conflicts',
+  'custom_addons_config': '/clither_custom/config.json',
 }
 
 file_paths = {key: BASE_DIR + value for key, value in file_paths.items()}
@@ -201,11 +203,11 @@ def get_globed_dirs(pattern):
   return [dir for dir in glob(pattern) if os.path.isdir(dir)]
 
 def process_area(area_of_interest, process_func, missing_config_func):
-  addon_dirs = get_dir_list(paths.addons_path)
+  addon_dirs = get_dir_list(paths.custom_addons_path)
   for dir in addon_dirs:
     print('Run {0} on: {1}'.format(area_of_interest, dir))
   
-    addon_path = '{0}/{1}'.format(paths.addons_path, dir)
+    addon_path = '{0}/{1}'.format(paths.custom_addons_path, dir)
     config_path = addon_path + '/clither.config.json'
 
     if os.path.exists(config_path):

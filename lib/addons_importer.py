@@ -18,12 +18,12 @@ def clone_addons(addons):
   """
   print('Cloning addons...')
   for url in addons:
-    run_cmd('cd {0}; git clone {1}'.format(paths.addons_path, url))
+    run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
 
-  for addon in get_dir_list(paths.addons_path):
-    src = os.path.join(paths.addons_path, addon)
+  for addon in get_dir_list(paths.custom_addons_path):
+    src = os.path.join(paths.custom_addons_path, addon)
     epoc = get_epoc_time()
-    dst = os.path.join(paths.addons_path, '{0}_{1}'.format(epoc, addon))
+    dst = os.path.join(paths.custom_addons_path, '{0}_{1}'.format(epoc, addon))
     os.rename(src, dst)
 
 
@@ -39,9 +39,9 @@ def main():
   print('Start addons_importer...')
   mk_clither_custom_dirs()
   try:
-    addons = get_json(paths.addons_config)
+    addons = get_json(paths.custom_addons_config)
   except IOError:
-    msg = EXCEPTION_TMP.format(paths.addons_config)
+    msg = EXCEPTION_TMP.format(paths.custom_addons_config)
     raise Exception(msg)
 
   clone_addons(addons)

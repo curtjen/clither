@@ -9,9 +9,9 @@ def main():
   print('-' * 40)
   print('Start generate_symlinks...')
   #TODO(xnz): glob?
-  rc_files = get_dir_list(paths.rcs_path)
+  rc_files = get_dir_list(paths.custom_rcs_path)
   for rc_file in rc_files:
-    src = '{0}/{1}'.format(paths.rcs_path, rc_file)
+    src = '{0}/{1}'.format(paths.custom_rcs_path, rc_file)
     dst = '{0}/.{1}'.format(paths.base_dir, rc_file)
     create_symlink(src, dst)
 

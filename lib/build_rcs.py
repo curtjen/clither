@@ -8,7 +8,7 @@ from helpers import paths, mk_clither_custom_dirs, append_to_file, clear_file, p
 #TODO(xnz): deal with name colltions.
 def _build_rc_files(rc_dict, addon_path):
   for rc, config_rc_path in rc_dict.items():
-    rc_dir_path = '{0}/{1}'.format(paths.rcs_path, rc)
+    rc_dir_path = '{0}/{1}'.format(paths.custom_rcs_path, rc)
     new_rc_path = '{0}/{1}'.format(addon_path, config_rc_path)
     import_cmd = 'source {0}'.format(new_rc_path)
 

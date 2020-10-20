@@ -12,7 +12,7 @@ def get_new_path(path, prefix):
     #TODO(xnz): not system portable...
     new_path = prefix
     new_path += path.replace('/', '+')
-    new_path = os.path.join(paths.bin_path, new_path)
+    new_path = os.path.join(paths.custom_bin_path, new_path)
     return new_path
 
 def _build_paths(config, addon_path):
@@ -36,7 +36,7 @@ def _build_paths(config, addon_path):
       if os.path.isdir(src_full_path):
         continue
 
-      dst_full_path = os.path.join(paths.bin_path, file_name)
+      dst_full_path = os.path.join(paths.custom_bin_path, file_name)
 
       result = direct_link_dict.setdefault(dst_full_path, [])
       result.append(src_full_path)
@@ -50,11 +50,12 @@ def _build_paths(config, addon_path):
           first = False
           continue
 
-        create_directory(paths.bin_conflicts_path)
+        create_directory(paths.custom_bin_conflicts_path)
         epoch_time = get_epoc_time()
         src_base = os.path.basename(src)
         conflict_dst = '{0}_{1}'.format(epoch_time, src_base)
-        conflict_dst = os.path.join(paths.bin_conflicts_path, conflict_dst)
+        conflict_dst = os.path.join(
+          paths.custom_bin_conflicts_path, conflict_dst)
         create_symlink(src, conflict_dst)
 
 def _override(dir):
@@ -69,7 +70,7 @@ def mk_paths_links():
   log_index = len(str(len(sys_bin_paths)))
 
   for index, sys_bin_path in enumerate(sys_bin_paths):
-    if sys_bin_path == paths.bin_path:
+    if sys_bin_path == paths.custom_bin_path:
       # not sure this is right? but ok for now
       continue
 
@@ -81,8 +82,8 @@ def main():
   print('-' * 40)
   print('Start build_bins...')
 
-  if os.path.exists(paths.bin_path):
-    shutil.rmtree(paths.bin_path)
+  if os.path.exists(paths.custom_bin_path):
+    shutil.rmtree(paths.custom_bin_path)
   mk_clither_custom_dirs()
   mk_paths_links()
   print('TODO: make sure clither_custom/bin is in $PATH')

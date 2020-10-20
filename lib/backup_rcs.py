@@ -10,7 +10,7 @@ def main():
   print('-' * 40)
   print('Start backup_rcs...')
   dot_files = {x[1:] for x in os.listdir(paths.base_dir) if x.startswith('.')}
-  rc_files = get_dir_list(paths.rcs_path)
+  rc_files = get_dir_list(paths.custom_rcs_path)
 
   rc_files = set(rc_files)
   dot_files_to_backup = dot_files.intersection(rc_files)
