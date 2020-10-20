@@ -14,6 +14,7 @@
 import calendar
 import json
 import os
+import shutil
 import sys
 import time
 
@@ -60,7 +61,7 @@ file_paths = {
   'custom_addons_config': '/clither_custom/config.json',
 }
 
-file_paths = {key: BASE_DIR + value for key, value in file_paths.items()}
+file_paths = {key: os.path.join(BASE_DIR, *value.split('/')) for key, value in file_paths.items()}
 
 paths = dict_to_obj(file_paths)
 
@@ -204,6 +205,7 @@ def get_globed_dirs(pattern):
 
 def process_area(area_of_interest, process_func, missing_config_func):
   addon_dirs = get_dir_list(paths.custom_addons_path)
+  print(addon_dirs)
   for dir in addon_dirs:
     print('Run {0} on: {1}'.format(area_of_interest, dir))
   
@@ -231,3 +233,14 @@ def process_area(area_of_interest, process_func, missing_config_func):
 
 def get_epoc_time():
   return str(calendar.timegm(time.gmtime()))
+
+def clean_dir(path):
+  if os.path.exists(path):
+    shutil.rmtree(path)
+
+def get_new_path(path, parent_path, prefix):
+    #TODO(xnz): not system portable...
+    new_path = prefix
+    new_path += path.replace('/', '+')
+    new_path = os.path.join(parent_path, new_path)
+    return new_path

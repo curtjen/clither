@@ -5,15 +5,8 @@ import re
 import shutil
 import time
 import os
-from helpers import (paths, mk_clither_custom_dirs, append_to_file, 
+from helpers import (paths, mk_clither_custom_dirs, clean_dir, get_new_path,
   process_area, get_dir_list, create_symlink, create_directory, get_epoc_time)
-
-def get_new_path(path, prefix):
-    #TODO(xnz): not system portable...
-    new_path = prefix
-    new_path += path.replace('/', '+')
-    new_path = os.path.join(paths.custom_bin_path, new_path)
-    return new_path
 
 def _build_paths(config, addon_path):
   direct_link_dict = {}
@@ -21,7 +14,7 @@ def _build_paths(config, addon_path):
   # verify that the shellrc has a connection to paths file
   for bin_path in config:
     bin_path = os.path.join(addon_path, bin_path)
-    new_path = get_new_path(bin_path, 'addon')
+    new_path = get_new_path(bin_path, paths.custom_bin_path, 'addon')
 
     src_dir_path = os.path.join(addon_path, bin_path)
     create_symlink(src_dir_path, new_path)
@@ -75,15 +68,14 @@ def mk_paths_links():
       continue
 
     index = str(index)
-    new_path = get_new_path(sys_bin_path, 'path_' + index.zfill(log_index))
+    new_path = get_new_path(sys_bin_path, paths.custom_bin_path, 'path_' + index.zfill(log_index))
     create_symlink(sys_bin_path, new_path)
 
 def main():
   print('-' * 40)
   print('Start build_bins...')
 
-  if os.path.exists(paths.custom_bin_path):
-    shutil.rmtree(paths.custom_bin_path)
+  clean_dir(paths.custom_bin_path)
   mk_clither_custom_dirs()
   mk_paths_links()
   print('TODO: make sure clither_custom/bin is in $PATH')

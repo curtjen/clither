@@ -3,7 +3,8 @@
 """
 import json
 import os
-from helpers import run_cmd, create_directory, paths, mk_clither_custom_dirs, get_dir_list, get_epoc_time
+from helpers import (run_cmd, create_directory, paths, mk_clither_custom_dirs,
+  get_dir_list, get_epoc_time, get_new_path)
 
 EXCEPTION_TMP = """Config file does not exist: {0}
 
@@ -17,14 +18,41 @@ def clone_addons(addons):
     addons: (list) Addons to clone.
   """
   print('Cloning addons...')
-  for url in addons:
-    run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
+  # pre_install_addons = set(get_dir_list(paths.custom_addons_path))
 
-  for addon in get_dir_list(paths.custom_addons_path):
-    src = os.path.join(paths.custom_addons_path, addon)
-    epoc = get_epoc_time()
-    dst = os.path.join(paths.custom_addons_path, '{0}_{1}'.format(epoc, addon))
-    os.rename(src, dst)
+  used_addons = set()
+  for url in addons:
+    addon_name = os.path.basename(url)
+    new_addon_name = get_new_path(url[8:],paths.custom_addons_path, '')
+    used_addons.add(new_addon_name)
+    if os.path.exists(new_addon_name):
+      run_cmd('cd {0}; git pull'.format(paths.custom_addons_path))
+      continue
+
+    run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
+    addon_path = os.path.join(paths.custom_addons_path, addon_name)
+    os.rename(addon_path, new_addon_name)
+    print('rename {0} to {1}'.format(addon_path, new_addon_name))
+
+  existing_addons = set(
+    os.path.join(paths.custom_addons_path, entry) 
+    for entry in get_dir_list(paths.custom_addons_path))
+
+  extra_addons = existing_addons - used_addons
+  if extra_addons:
+    print('you have extra addons, do something with them: ' + str(extra_addons))
+
+
+
+  # post_install_addons = set(get_dir_list(paths.custom_addons_path))
+
+  # new_addons = post_install_addons - pre_install_addons
+
+  # for addon in new_addons:
+  #   src = os.path.join(paths.custom_addons_path, addon)
+  #   epoc = get_epoc_time()
+  #   dst = os.path.join(paths.custom_addons_path, '{0}_{1}'.format(epoc, addon))
+  #   os.rename(src, dst)
 
 
 def get_json(json_file_path):
