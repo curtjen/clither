@@ -27,6 +27,8 @@ dry_run_flag = False
 if '--dry_run' in sys.argv:
   dry_run_flag = True
 
+cd = lambda path: 'cd ' + path
+
 # Any json we use should (for now) should not use spaces or - in the key
 def dict_to_obj(blueprint_dict):
   blueprint_list = list(blueprint_dict.keys())
@@ -43,13 +45,14 @@ BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
 #TODO(xnz): mk naming consistent.
 file_paths = {
+  'clither_repo': 'https://github.com/curtjen/clither.git',
   'base_dir': '',  # + is temps
   'clither_path': '/clither',
   'clither_lib_path': '/clither/template_files',
   'clither_tmp_files_path': '/clither/lib',
   'clither_pather': '/clither/pather.py',
   'clither_run': '/clither/template_files/run.py',
-  'clither_run_help': '/clither/template_files/helper.py',  # may fold this into lib/helper
+  'clither_run_help': '/clither/lib/helper.py',
   'clither_tmp_config': '/clither/template_files/config.json',
 
   'custom_path':  '/clither_custom/',
@@ -151,12 +154,13 @@ def dry_run(msg):
     return True
   return
 
-def run_cmd(cmd):
+def run_cmd(*cmd_list):
   """Desc
 
   args:
     cmd: (str) The command to run.
   """
+  cmd = '; '.join(str(x) for x in cmd_list)
   msg = 'run cmd: ' + cmd
   if dry_run(msg):
     return
