@@ -24,6 +24,10 @@ def clone_addons(addons):
   for url in addons:
     addon_name = os.path.basename(url)
     new_addon_name = get_new_path(url[8:],paths.custom_addons_path, '')
+
+    if new_addon_name.endswith('.git'):
+      new_addon_name = new_addon_name[:-4]
+
     used_addons.add(new_addon_name)
     if os.path.exists(new_addon_name):
       run_cmd('cd {0}; git pull'.format(paths.custom_addons_path))
@@ -31,6 +35,7 @@ def clone_addons(addons):
 
     run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
     addon_path = os.path.join(paths.custom_addons_path, addon_name)
+    print(addon_path)
     os.rename(addon_path, new_addon_name)
     print('rename {0} to {1}'.format(addon_path, new_addon_name))
 
