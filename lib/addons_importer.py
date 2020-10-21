@@ -23,7 +23,8 @@ def clone_addons(addons):
   used_addons = set()
   for url in addons:
     addon_name = os.path.basename(url)
-    new_addon_name = get_new_path(url[8:],paths.custom_addons_path, '')
+    new_addon_name = get_new_path(
+      url[8:], paths.custom_addons_path, '')
 
     if new_addon_name.endswith('.git'):
       new_addon_name = new_addon_name[:-4]
