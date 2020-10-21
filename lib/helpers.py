@@ -64,7 +64,9 @@ file_paths = {
   'custom_addons_config': '/clither_custom/config.json',
 }
 
-file_paths = {key: os.path.join(BASE_DIR, *value.split('/')) for key, value in file_paths.items()}
+file_paths = {
+  key: os.path.join(BASE_DIR, *value.split('/'))
+  for key, value in file_paths.items()}
 
 paths = dict_to_obj(file_paths)
 
@@ -95,7 +97,7 @@ def mk_clither_custom_dirs():
     'bins/conflicts'
   )
   for dir in dirs:
-    create_directory('{0}/clither_custom/{1}'.format(paths.base_dir, dir))
+    create_directory('{0}/{1}'.format(paths.custom_path, dir))
 
 def backup_file(file_path):
   """Backup file at a given path.
