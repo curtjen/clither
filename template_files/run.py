@@ -3,7 +3,7 @@ import os
 import sys
 
 import pather  # Run before lib imports
-from helper import cd, run_cmd, paths
+from helpers import cd, run_cmd, paths
 
 
 def get_clither():

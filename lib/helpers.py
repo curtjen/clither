@@ -52,7 +52,7 @@ file_paths = {
   'clither_tmp_files_path': '/clither/lib',
   'clither_pather': '/clither/pather.py',
   'clither_run': '/clither/template_files/run.py',
-  'clither_run_help': '/clither/lib/helper.py',
+  'clither_run_help': '/clither/lib/helpers.py',
   'clither_tmp_config': '/clither/template_files/config.json',
 
   'custom_path':  '/clither_custom/',
