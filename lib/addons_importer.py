@@ -5,7 +5,7 @@ import json
 import re
 import os
 from helpers import (run_cmd, create_directory, paths, mk_clither_custom_dirs,
-  get_dir_list, get_epoc_time, get_new_path)
+  get_dir_list, get_epoc_time, get_new_path, cd)
 
 EXCEPTION_TMP = """Config file does not exist: {0}
 
@@ -19,7 +19,6 @@ def clone_addons(addons):
     addons: (list) Addons to clone.
   """
   print('Cloning addons...')
-  # pre_install_addons = set(get_dir_list(paths.custom_addons_path))
 
   used_addons = set()
   for url in addons:
@@ -37,13 +36,13 @@ def clone_addons(addons):
 
     used_addons.add(new_addon_name)
     if os.path.exists(new_addon_name):
-      run_cmd('cd {0}; git pull'.format(new_addon_name))
+      run_cmd(cd(new_addon_name), 'git pull')
       continue
 
-    run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
+    run_cmd(cd(paths.custom_addons_path), 'git clone ' +  url)
     addon_path = os.path.join(paths.custom_addons_path, addon_name)
-    print(addon_path)
-    os.rename(addon_path, new_addon_name)
+
+    os.rename(addon_path, new_addon_name)  #TODO(xnz): absract to helper
     print('rename {0} to {1}'.format(addon_path, new_addon_name))
 
   existing_addons = set(
@@ -53,19 +52,6 @@ def clone_addons(addons):
   extra_addons = existing_addons - used_addons
   if extra_addons:
     print('you have extra addons, do something with them: ' + str(extra_addons))
-
-
-
-  # post_install_addons = set(get_dir_list(paths.custom_addons_path))
-
-  # new_addons = post_install_addons - pre_install_addons
-
-  # for addon in new_addons:
-  #   src = os.path.join(paths.custom_addons_path, addon)
-  #   epoc = get_epoc_time()
-  #   dst = os.path.join(paths.custom_addons_path, '{0}_{1}'.format(epoc, addon))
-  #   os.rename(src, dst)
-
 
 def get_json(json_file_path):
   # TODO(curtjen): Try and fail safely for when no config exists
