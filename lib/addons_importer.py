@@ -2,6 +2,7 @@
 """
 """
 import json
+import re
 import os
 from helpers import (run_cmd, create_directory, paths, mk_clither_custom_dirs,
   get_dir_list, get_epoc_time, get_new_path)
@@ -23,15 +24,20 @@ def clone_addons(addons):
   used_addons = set()
   for url in addons:
     addon_name = os.path.basename(url)
-    new_addon_name = get_new_path(
-      url[8:], paths.custom_addons_path, '')
 
-    if new_addon_name.endswith('.git'):
-      new_addon_name = new_addon_name[:-4]
+    git_repo_comp = re.compile(r'https?://(.+?)(.git)*$')
+    match = git_repo_comp.match(url)
+
+    trucated_url = addon_name
+    if match:
+      trucated_url , _ = match.groups()
+
+    new_addon_name = get_new_path(
+       trucated_url, paths.custom_addons_path, '')
 
     used_addons.add(new_addon_name)
     if os.path.exists(new_addon_name):
-      run_cmd('cd {0}; git pull'.format(paths.custom_addons_path))
+      run_cmd('cd {0}; git pull'.format(new_addon_name))
       continue
 
     run_cmd('cd {0}; git clone {1}'.format(paths.custom_addons_path, url))
