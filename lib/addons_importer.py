@@ -49,6 +49,7 @@ def clone_addons(addons):
     os.path.join(paths.custom_addons_path, entry) 
     for entry in get_dir_list(paths.custom_addons_path))
 
+  print(used_addons)
   extra_addons = existing_addons - used_addons
   if extra_addons:
     print('you have extra addons, do something with them: ' + str(extra_addons))

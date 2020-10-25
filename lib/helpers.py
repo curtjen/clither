@@ -211,7 +211,6 @@ def get_globed_dirs(pattern):
 
 def process_area(area_of_interest, process_func, missing_config_func):
   addon_dirs = get_dir_list(paths.custom_addons_path)
-  print(addon_dirs)
   for dir in addon_dirs:
     print('Run {0} on: {1}'.format(area_of_interest, dir))
   
@@ -231,7 +230,7 @@ def process_area(area_of_interest, process_func, missing_config_func):
       if not result:
         msg = 'File does not have {0} section: {1}'
         print(msg.format(area_of_interest, config_path))
-        return
+        continue
       
       process_func(result, addon_path)
     else:
