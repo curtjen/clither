@@ -57,7 +57,7 @@ def main():
     # - dry run
     # - update any paths that come from helpers
     build_bins.main()
-    run_installs()
+    run_installs.main()
     print('Finished install!')
 
     return
