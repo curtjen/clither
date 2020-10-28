@@ -162,6 +162,9 @@ def run_cmd(*cmd_list):
   args:
     cmd: (str) The command to run.
   """
+  if not filter(None, cmd_list):
+    return
+
   cmd = '; '.join(str(x) for x in cmd_list)
   msg = 'run cmd: ' + cmd
   if dry_run(msg):

@@ -19,6 +19,7 @@ import backup_rcs
 import mk_custom
 import generate_symlinks
 import build_bins
+import run_installs
 
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true',
@@ -37,6 +38,8 @@ FLAGS.add_argument('--generate_symlinks', action='store_true',
   help='Run generating symlinks.')
 FLAGS.add_argument('--build_bins', action='store_true',
   help='Run build_bins.')
+FLAGS.add_argument('--run_installs', action='store_true',
+  help='Run run_installs.')
 FLAGS = FLAGS.parse_args()
 
 def main():
@@ -54,6 +57,7 @@ def main():
     # - dry run
     # - update any paths that come from helpers
     build_bins.main()
+    run_installs()
     print('Finished install!')
 
     return
@@ -72,6 +76,9 @@ def main():
 
   if FLAGS.build_bins:
     build_bins.main()
+
+  if FLAGS.run_installs:
+    run_installs.main()
 
 if __name__ == '__main__':
   main()
