@@ -16,14 +16,17 @@ def get_clither():
 
   run_cmd(cd(paths.base_dir), 'git clone ' + paths.clither_base_repo)
 
-def run_clither():
-  run_cmd(cd(paths.clither_path), './clither.py --install')
+def run_clither(args):
+  flags = ' '.join(args)
+  if not args:
+    flags = '--setup_custom --install'
+  run_cmd(cd(paths.clither_path), './clither.py ' + flags)
 
-def main():
+def main(args):
   get_clither()
-  run_clither()
+  run_clither(args)
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
 
 

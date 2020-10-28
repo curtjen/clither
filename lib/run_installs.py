@@ -92,9 +92,10 @@ def installer(installed_exe, desired_cmds):
   for cmd in desired_cmds:
     process_node(cmd)
 
-def main(desired_cmds):
+def main():
   print('-' * 40)
   print('Start run_installs...')
+  desired_cmds = DESIRED_CMDS
   mk_clither_custom_dirs()
   installed_exe = get_installed_exe()
   installer(installed_exe, desired_cmds)
