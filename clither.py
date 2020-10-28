@@ -2,10 +2,10 @@
 """
 
 The first time run:
-$ ./clither.py --mk_custom --install
+$ ./clither.py --setup_custom --install
 
 Useful reselt:
-$ rm -rf ../clither_custom && ./clither.py --install --mk_custom
+$ rm -rf ../clither_custom && ./clither.py --install --setup_custom
 
 """
 import argparse
@@ -16,7 +16,7 @@ import pather  # run first only works if run from ./
 import addons_importer
 import build_rcs
 import backup_rcs
-import mk_custom
+import setup_custom
 import generate_symlinks
 import build_bins
 import run_installs
@@ -24,7 +24,7 @@ import run_installs
 FLAGS = argparse.ArgumentParser(__doc__)
 FLAGS.add_argument('--dry_run', action='store_true',
   help='Run without doing anything.')
-FLAGS.add_argument('--mk_custom', action='store_true',
+FLAGS.add_argument('--setup_custom', action='store_true',
   help='sets up ../clither_custom.')
 FLAGS.add_argument('--addons_import', action='store_true',
   help='Run addons import.')
@@ -43,8 +43,8 @@ FLAGS.add_argument('--run_installs', action='store_true',
 FLAGS = FLAGS.parse_args()
 
 def main():
-  if FLAGS.mk_custom:
-    mk_custom.main()
+  if FLAGS.setup_custom:
+    setup_custom.main()
 
   if FLAGS.install:
     #TODO(xnz): add in halt logic, maybe a for?
