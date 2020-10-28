@@ -54,6 +54,8 @@ file_paths = {
   'clither_run': '/clither/template_files/run.py',
   'clither_run_help': '/clither/lib/helpers.py',
   'clither_tmp_config': '/clither/template_files/config.json',
+  'clither_default_json': '/clither/template_files/clither.config.json',
+  'clither_default_addons_rc': '/clither/template_files/general_shell_materal',
 
   'custom_path':  '/clither_custom/',
   'custom_lib_path': '/clither_custom/lib',
@@ -61,7 +63,8 @@ file_paths = {
   'custom_addons_path': '/clither_custom/addons',
   'custom_bin_path': '/clither_custom/bins',
   'custom_bin_conflicts_path': '/clither_custom/bins/conflicts',
-  'custom_addons_config': '/clither_custom/config.json',
+  'custom_default_addon_path': '/clither_custom/addons/clither_defaults',
+  'custom_default_addon_rcs_path': '/clither_custom/addons/clither_defaults/rcs',
 }
 
 file_paths = {
@@ -186,12 +189,16 @@ def create_symlink(src, dst):
 
   os.symlink(src, dst)
 
-def copy_file(src_file, dst):
+def copy_file(src_file, dst, write_over=False):
   dst = os.path.join(dst, os.path.basename(src_file))
 
   if os.path.exists(dst):
-    print('copy_file: dst already exists: ' + dst)
-    return
+    if not write_over:
+      print('copy_file: dst already exists: ' + dst)
+      return
+    if not dry_run_flag:
+      print('rm ' + dst)
+      os.remove(dst)
 
   msg = 'cp {0} {1}'.format(src_file, dst)
   if dry_run(msg):

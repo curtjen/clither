@@ -1,0 +1,1 @@
+PATH+=':'$(lib/get_full_bin_path.py)
