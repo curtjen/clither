@@ -6,6 +6,7 @@ from glob import glob
 from helpers import paths, mk_clither_custom_dirs, run_cmd
 
 #TODO(xnz): mv to json, maybe addons lvl?
+#TODO(xnz): What about running scrips? can't use get_installed_exe...
 DESIRED_CMDS = {
   #name: (
   # (full_name, desc),

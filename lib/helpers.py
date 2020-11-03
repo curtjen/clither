@@ -63,6 +63,9 @@ file_paths = {
   'custom_addons_path': '/clither_custom/addons',
   'custom_bin_path': '/clither_custom/bins',
   'custom_bin_conflicts_path': '/clither_custom/bins/conflicts',
+  'custom_configs_path': '/clither_custom/configs',
+  'custom_overrides_path': '/clither_custom/configs/overrides',
+  'custom_fallbacks_path': '/clither_custom/configs/fallbacks',
   'custom_addons_config': '/clither_custom/config.json',
 
   'custom_default_addon_path': '/clither_custom/addons/clither_defaults',
@@ -222,31 +225,49 @@ def get_globed_dirs(pattern):
   return [dir for dir in glob(pattern) if os.path.isdir(dir)]
 
 def process_area(area_of_interest, process_func, missing_config_func):
+  def _mk_paths(path, config_file_name):
+    addon_path = os.path.join(path, dir)
+    config_path = os.path.join(addon_path, config_file_name)
+    return addon_path, config_path
+
+  def _process_config_area(addon_path, config_path):
+    with open(config_path) as file:
+      try:
+        config = json.load(file)
+      except ValueError:
+        print('file format was not a json:', config_path) # mark better
+        return
+
+    result = config.setdefault(area_of_interest)
+
+    if not result:
+      msg = 'File does not have {0} section: {1}'
+      print(msg.format(area_of_interest, config_path))
+      return
+ 
+    process_func(result, addon_path)
+
   addon_dirs = get_dir_list(paths.custom_addons_path)
   for dir in addon_dirs:
     print('Run {0} on: {1}'.format(area_of_interest, dir))
-  
-    addon_path = '{0}/{1}'.format(paths.custom_addons_path, dir)
-    config_path = addon_path + '/clither.config.json'
-
+ 
+    addon_path, config_path = _mk_paths(paths.custom_overrides_path, dir)
     if os.path.exists(config_path):
-      with open(config_path) as file:
-        try:  #TODO(xnz): ask cjensen if we want this to crash or not
-          config = json.load(file)
-        except ValueError:
-          print('file format was not a json:', config_path) # mark better
-          continue
+      _process_config_area(addon_path, config_path)
+      continue
 
-      result = config.setdefault(area_of_interest)
+    addon_path, config_path = _mk_paths(paths.custom_addons_path, 'clither.config.json')
+    if os.path.exists(config_path):
+      _process_config_area(addon_path, config_path)
+      continue
 
-      if not result:
-        msg = 'File does not have {0} section: {1}'
-        print(msg.format(area_of_interest, config_path))
-        continue
-      
-      process_func(result, addon_path)
-    else:
-      missing_config_func(dir)
+    addon_path, config_path = _mk_paths(paths.custom_fallbacks_path, dir)
+    if os.path.exists(config_path):
+      _process_config_area(addon_path, config_path)
+      continue
+
+    print('No config found for ' + dir)
+    missing_config_func(dir)
 
 def get_epoc_time():
   return str(calendar.timegm(time.gmtime()))

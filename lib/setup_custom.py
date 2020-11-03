@@ -16,10 +16,14 @@ def main():
   copy_file(paths.clither_pather, paths.custom_path, write_over=True)
   copy_file(paths.clither_run_help, paths.custom_lib_path, write_over=True)
 
-  create_directory(paths.custom_default_addon_path)
-  copy_file(paths.clither_default_json, paths.custom_default_addon_path, write_over=True)
-  create_directory(paths.custom_default_addon_rcs_path)
-  copy_file(paths.clither_default_addons_rc, paths.custom_default_addon_rcs_path, write_over=True)
+  # create_directory(paths.custom_default_addon_path)
+  # copy_file(paths.clither_default_json, paths.custom_default_addon_path, write_over=True)
+  # create_directory(paths.custom_default_addon_rcs_path)
+  # copy_file(paths.clither_default_addons_rc, paths.custom_default_addon_rcs_path, write_over=True)
+
+  create_directory(paths.custom_configs_path)
+  create_directory(paths.custom_overrides_path)
+  create_directory(paths.custom_fallbacks_path)
 
   print('Finished mk_custom!')
 
