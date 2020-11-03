@@ -249,9 +249,10 @@ def process_area(area_of_interest, process_func, missing_config_func):
 
   addon_dirs = get_dir_list(paths.custom_addons_path)
   for dir in addon_dirs:
-    print('Run {0} on: {1}'.format(area_of_interest, dir))
- 
     addon_path, config_path = _mk_paths(paths.custom_overrides_path, dir)
+
+    print('Run {0} on: {1}'.format(area_of_interest, dir))
+
     if os.path.exists(config_path):
       _process_config_area(addon_path, config_path)
       continue
