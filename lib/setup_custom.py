@@ -24,6 +24,7 @@ def main():
   create_directory(paths.custom_configs_path)
   create_directory(paths.custom_overrides_path)
   create_directory(paths.custom_fallbacks_path)
+  create_directory(paths.custom_lockfile_path)
 
   print('Finished mk_custom!')
 

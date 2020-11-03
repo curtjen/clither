@@ -3,7 +3,7 @@
 import os
 
 from glob import glob
-from helpers import paths, mk_clither_custom_dirs, run_cmd, process_area
+from helpers import paths, mk_clither_custom_dirs, run_cmd, process_area, clear_file
 
 def get_installed_exe():
   path_exe_path = paths.custom_bin_path + '/path_*/*'
@@ -34,13 +34,14 @@ def installer(desired_cmds, addon_path):
     run_install = True  # tmp until get logic for script
 
     if _type == 'path':
-      installed_exe = get_installed_exe()
-      run_install = cmd_name not in installed_exe # True = not installed.
+      path_exes = get_installed_exe()
+      run_install = cmd_name not in path_exes
 
-    if _type == 'install':
-      # put name together .installed
-      # check if exists, if it does then run_intall = False
-      pass
+    lock_file = os.path.basename(addon_path)
+    lock_file += '.installed'
+    lock_file = os.path.join(paths.custom_lockfile_path, lock_file)
+    if _type == 'install' and os.path.exists(lock_file):
+      run_install = False
 
     cmd = None
     if run_install and to_install:
@@ -49,8 +50,11 @@ def installer(desired_cmds, addon_path):
     if not run_install and to_update:
       cmd = to_update
 
+    if not cmd and _type == 'install':
+      return
+
     if not cmd:
-      msg = ('{0} line was malformed. Look into it.')
+      msg = ('{0} line is malformed. Look into it.')
       raise Exception(msg.format(cmd_name))
 
     cmd = cmd.format(addon_path)
@@ -58,11 +62,9 @@ def installer(desired_cmds, addon_path):
     run_cmd(cmd)
     has_been_processed.append(cmd_name)
 
-    if _type == 'install':
-      pass
-      # add .installed file
+    if _type == 'install' and not os.path.exists(lock_file):
+      clear_file(lock_file)
 
-      
   for cmd in desired_cmds:
     process_node(cmd)
 

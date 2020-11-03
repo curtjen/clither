@@ -66,6 +66,7 @@ file_paths = {
   'custom_configs_path': '/clither_custom/configs',
   'custom_overrides_path': '/clither_custom/configs/overrides',
   'custom_fallbacks_path': '/clither_custom/configs/fallbacks',
+  'custom_lockfile_path': '/clither_custom/lockfiles',
   'custom_addons_config': '/clither_custom/config.json',
 
   'custom_default_addon_path': '/clither_custom/addons/clither_defaults',
