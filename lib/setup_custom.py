@@ -9,7 +9,7 @@ def main():
   print('-' * 40)
   print('Start mk_custom...')
   create_directory(paths.custom_path)
-  copy_file(paths.clither_tmp_config, paths.custom_path, write_over=True)
+  copy_file(paths.clither_tmp_config, paths.custom_path)
 
   create_directory(paths.custom_lib_path)
   copy_file(paths.clither_run, paths.custom_path, write_over=True) # may want another lvl deep?

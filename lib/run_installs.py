@@ -38,7 +38,8 @@ def installer(desired_cmds, addon_path):
       run_install = cmd_name not in path_exes
 
     lock_file = os.path.basename(addon_path)
-    lock_file += '.installed'
+    cmd_name = cmd_name.replace(' ', "-")
+    lock_file = '{0}-{1}.{2}'.format(lock_file, cmd_name, 'installed')
     lock_file = os.path.join(paths.custom_lockfile_path, lock_file)
     if _type == 'install' and os.path.exists(lock_file):
       run_install = False
@@ -64,6 +65,7 @@ def installer(desired_cmds, addon_path):
 
     if _type == 'install' and not os.path.exists(lock_file):
       clear_file(lock_file)
+      #TODO(xnz): consider adding the used cmd and date to the file.
 
   for cmd in desired_cmds:
     process_node(cmd)
